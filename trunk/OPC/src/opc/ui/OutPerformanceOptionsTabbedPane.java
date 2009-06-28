@@ -9,10 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class StockOptionsTabbedPane extends OPCTabbedPane {
+public class OutPerformanceOptionsTabbedPane extends OPCTabbedPane {
 
-    public StockOptionsTabbedPane()
-    {
-        super();
-    }
 }

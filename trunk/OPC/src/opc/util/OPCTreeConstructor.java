@@ -16,7 +16,8 @@ import java.util.StringTokenizer;
 public class OPCTreeConstructor {
 
     final static String TREE_ROOT_NAME = "Options Model Types";
-    final static String INPUT_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\OPC\\conf\\Options Model Types.config";
+    //final static String INPUT_LOCATION = "..\\conf\\Options Model Types.config";
+    final static String INPUT_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\Options Model Types.config";
 
     public static OPCTreeNode constructTree() 
     {
@@ -67,6 +68,10 @@ public class OPCTreeConstructor {
         catch( IOException e )
         {
             System.err.println( "Error when reading input file: " + INPUT_LOCATION + e );
+        }
+        catch( Exception e )
+        {
+            System.err.println( "Encountered an unexpected exception: " + e );
         }
 
         return root;

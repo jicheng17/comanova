@@ -21,20 +21,25 @@ import javax.swing.tree.TreePath;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.lang.Class;
 
 import opc.util.OPCTreeNode;
 import opc.util.OPCTreeConstructor;
+import opc.util.OPCTreeNodeNameClassMapConstructor;
+
 /**
  *
  * @author ZHAO QINGHUA
  */
 public class OPCMainUI {
 
-    final static int MAIN_FRAME_WIDTH = 250;
-    final static int MAIN_FRAME_HEIGHT = 250;
+    final static int MAIN_FRAME_WIDTH = 1100;
+    final static int MAIN_FRAME_HEIGHT = 600;
     final static String MAIN_UI_TITLE = "Options Pricing Calculator";
     final static String TREE_ROOT_NAME = "Options Model Types";
+
+    private static HashMap<String,String> treeNodeNameClassMap;
 
     private static JFrame mainFrame;
     private static JSplitPane splitPane;
@@ -45,6 +50,8 @@ public class OPCMainUI {
 
     private static void initComponents()
     {
+        treeNodeNameClassMap = OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap();
+
         // init main frame
         mainFrame = new JFrame( MAIN_UI_TITLE );
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,6 +81,12 @@ public class OPCMainUI {
         renderer.setClosedIcon(null);
         renderer.setLeafIcon(null);
         optionModelTree.setCellRenderer(renderer);
+        MouseListener ml = getTreeMouseListener();
+        optionModelTree.addMouseListener(ml);
+    }
+
+    private static MouseListener getTreeMouseListener()
+    {
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 int selRow = optionModelTree.getRowForLocation(e.getX(), e.getY());
@@ -84,25 +97,28 @@ public class OPCMainUI {
                         if( nodeSelected.isLeaf() )
                         {
                             String nodeName = (String)nodeSelected.getUserObject();
+                            String nodeClass = treeNodeNameClassMap.get(nodeName);
                             OPCTabbedPane rightPane = new OPCTabbedPane();
                             try
                             {
-                                Class<? extends OPCTabbedPane> tabbedPane = Class.forName("opc.ui.StockOptionsTabbedPane").asSubclass(OPCTabbedPane.class);
+                                Class<? extends OPCTabbedPane> tabbedPane = Class.forName(nodeClass).asSubclass(OPCTabbedPane.class);
                                 rightPane = tabbedPane.newInstance();
                             }
                             catch (Exception cnfe )
                             {
                                 cnfe.printStackTrace();
                             }
+                            rightPane.setMainPanelTitle( nodeName );
+                            rightPane.show();
                             splitPane.setRightComponent( rightPane );
                         }
                     }
                 }
             }
         };
-        optionModelTree.addMouseListener(ml);
+        return ml;
     }
-
+    
     private static DefaultMutableTreeNode processHierarchy( OPCTreeNode root )
     {
         DefaultMutableTreeNode result = new DefaultMutableTreeNode( root.getNodeName() );
