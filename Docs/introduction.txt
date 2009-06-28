@@ -3,3 +3,11 @@ Add in info:
    http://test.olwebdesign.com/demo/ 
 2. source for eval decoder
    http://sourceforge.net/project/showfiles.php?group_id=203466
+   
+3. jquery photo slide example: 
+   http://www.hotajax.org/demo/jquery/zoomimage/zoomimage/index.html
+   http://www.gruppo4.com/~tobia/cross-slide.shtml
+   http://malsup.com/jquery/cycle/
+   
+4. http://www.silverstripe.com/   
+   
