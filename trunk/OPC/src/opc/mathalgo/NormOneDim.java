@@ -12,14 +12,14 @@ package opc.mathalgo;
 import static java.lang.Math.*;
 
 public class NormOneDim {
-    private double PI = 3.141592653589793238462643;
+    private static double PI = 3.141592653589793238462643;
 
-    public double pdf(double x)
+    public static double pdf(double x)
     {
         return 1.0/sqrt(2.0*PI)*exp(-0.5*x*x);
     }
 
-    public double cdf(double x)
+    public static double cdf(double x)
     {
         if (x > 6.0)
         {
@@ -48,6 +48,5 @@ public class NormOneDim {
         }
         return n;
     }
-
 
 }

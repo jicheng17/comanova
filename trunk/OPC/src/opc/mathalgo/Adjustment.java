@@ -14,14 +14,14 @@ import static java.lang.Math.*;
 
 public class Adjustment {
 
-    public double getAnnualTime(double T, String timeconvention)
+    public static double getAnnualTime(double T, String timeconvention)
     {
         if (timeconvention.equals("Days"))
                 T = T/365;
         return T;
     }
 
-    public double getContinuousRate(double r, String ratetype)
+    public static double getContinuousRate(double r, String ratetype)
     {
         int m = 0;
         if (ratetype.equals(OPCConstants.COMPOUNDING_FREQUENCY.CONTINUOUSLY))
