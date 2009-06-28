@@ -1,0 +1,269 @@
+/**
+ * SSCORE TYPOGRAPHY STYLESHEET.
+ * 
+ * This is the typography stylesheet which has generic elements over both 
+ * SS.org and SS.com. Any specific code can go here but remember this
+ * file will be included in both sites so caution will robinson!
+ * 
+ * The team responible for this effort - James K, Sal F, Sean H, Will R.
+ * Any comments can be directed to those 4 amazing people.
+ *
+ */
+
+/* PARAGRAPHS 
+-------------------------------------------- */
+.typography p {
+	font-size: 14px;
+	line-height: 20px;
+	margin-bottom: 24px;
+}
+
+/* ITALICS
+-------------------------------------------- */
+.typography em {
+	font-style: italic;
+}
+
+.typography pre {
+	font-family: "Courier New", Courier, monospace;
+	background: #f5f5f5;
+	padding: 3px;
+	margin-bottom: 24px;
+	border: 1px solid #999;
+}
+
+/* QUOTES
+-------------------------------------------- */
+.typography blockquote,
+#team-page blockquote {
+	margin-left:20px;
+	margin-top:20px;
+	background:url(../images/quote_top.gif) no-repeat top left;
+}
+.typography blockquote {
+	width:90%;
+}
+#team-page blockquote {
+	width:45%;
+	text-align: center;
+}
+.typography blockquote blockquote {
+	background:none;
+}
+	.typography blockquote blockquote * {
+		background:none;
+	}
+
+	.typography blockquote p,
+	.typography blockquote span {
+		font-family:"Lucida Grande",Verdana;
+		background:url(../images/quote_bottom.gif) no-repeat bottom right;
+		padding:22px;
+		color:#333;
+		font-size: 110%;
+	}
+	
+.typography q {
+	display:block;
+	font-size: 8px;
+	margin: 10px;
+	padding: 5px;
+}
+
+/* LINKS 
+-------------------------------------------- */
+
+	.typography a[href$=".pdf"],
+	.typography a[href$=".PDF"],
+	.typography a.pdf {
+		padding: 2px;
+		padding-right: 20px;
+		padding-left: 0;
+		background: url(../images/icons/page_white_acrobat.png) no-repeat right center;
+	}
+	.typography a[href$=".doc"],
+	.typography a[href$=".DOC"],
+	.typography a.doc {
+		padding: 2px;
+		padding-right: 20px;
+		padding-left: 0;
+		background: url(../images/icons/page_word.png) no-repeat right center;
+	}
+	.typography a[href$=".xls"],
+	.typography a[href$=".XLS"],
+	.typography a.xls {
+		padding: 2px;
+		padding-right: 20px;
+		padding-left: 0;
+		background: url(../images/icons/page_excel.png) no-repeat right center;
+	}
+	.typography a[href$=".gz"],
+	.typography a[href$=".GZ"],
+	.typography a[href$=".gzip"],
+	.typography a[href$=".GZIP"],
+	.typography a[href$=".zip"],
+	.typography a[href$=".ZIP"],
+	.typography a.archive {
+		padding: 2px;
+		padding-right: 20px;
+		padding-left: 0;
+		background: url(../images/icons/page_white_zip.png) no-repeat right center;
+	}
+	.typography a[href$=".exe"],
+	.typography a[href$=".EXE"],
+	.typography a.application {
+		padding: 2px;
+		padding-right: 20px;
+		padding-left: 0;
+		background: url(../images/icons/application.png) no-repeat right center;
+	}
+
+/* LIST STYLES 
+ * moved bg image to ss-com and ss-org files as they use different images
+-------------------------------------------- */
+.typography ul,
+.typography ol {
+	border-bottom: 1px solid #B2E0FF;
+	margin-bottom: 25px;
+}
+
+	.typography ul li,
+	.typography ol li {
+		border-top: 1px solid #B2E0FF;
+		padding: 12px 0 12px 35px;
+		overflow: hidden;
+	}
+
+/* HEADER STYLES 
+-------------------------------------------- */
+.typography h1,
+.typography h2,
+.typography h3,
+.typography h4,
+.typography h5 {
+	font-weight: normal;
+	line-height: 150%;
+}
+
+.typography h1 {
+	font-size: 180%;
+	margin-bottom: 0.7em;
+}
+
+.typography h2 {
+	font-size: 160%;
+}
+
+.typography h3 {
+	line-height: 1.2em;
+	margin-bottom: 1.5em;
+}
+
+.typography h4 {
+	font-size: 90%;
+	margin-bottom: 0.2em;
+}
+
+.typography h5 {
+	display: block;
+	font-size: 80%;
+	padding: 5px 0;
+	margin: 1em 0;
+}
+
+/* TABLE STYLING 
+-------------------------------------------- */
+.typography table {
+	border-top: 1px solid #B2E0FF;
+	margin-bottom: 5px;
+}
+.typography table td {
+	padding: 10px 20px;
+	border-bottom: 1px solid #B2E0FF;
+}
+.typography table tr.odd-row {
+	background: #F2FAFF;
+}
+
+.typography table td p {
+	margin-bottom: 0;
+}
+
+.typography table#notFound {
+	border-top: 0;
+	margin-left: 150px;
+}
+.typography table#notFound td {
+	padding: 0 30px 0 0;
+	border: 0;
+}
+.typography table#notFound thead tr td strong {
+	display: block;
+	padding-bottom: 15px;
+}
+.typography table#notFound tr.odd-row {
+	background: none;
+}
+
+/* WYSIWYG EDITOR ALIGNMENT CLASSES 
+-------------------------------------------- */
+.typography .left {
+	text-align: left;
+}
+.typography .center {
+	text-align: center;
+}
+.typography .right {
+	text-align: right;
+}
+
+/* IMAGES 
+-------------------------------------------- */
+.typography img {
+	border: none;
+}
+	.typography img.right {
+		float: right;
+		margin-left: 20px;
+	}
+	.typography img.left {
+		float: left;
+		margin-right: 10px;
+	}
+	.typography img.leftAlone {
+		float: left;
+		margin-right: 100%;
+	}
+	.typography img.center {
+		float: none;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+	.typography a img {
+		border: none;
+		border
+	}
+
+/* LINK ENCRYPTION
+-------------------------------------------- */
+
+.typography span.codedirection { 
+	unicode-bidi: bidi-override;
+	direction: rtl;
+	/* thanks to Silvan - http://techblog.tilllate.com/2008/07/20/ten-methods-to-obfuscate-e-mail-addresses-compared/ */
+}
+
+/* SMALL NOTE TEXT
+-------------------------------------------- */
+.typography .small {
+	font-family: "Lucida Grande", Verdana;
+	font-size: 9px;
+	margin: 0 0 0 10px;
+}
+
+/* CUSTOM STYLES
+--------------------------------------------*/
+.typography p.helpsupport_item_page_description {
+	padding-right: 200px;
+}

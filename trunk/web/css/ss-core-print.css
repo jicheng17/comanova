@@ -1,0 +1,89 @@
+/**
+ * SSCORE PRINT STYLESHEET.
+ * 
+ * This is the print stylesheet which has generic elements over both 
+ * SS.org and SS.com. Any specific code can go here but remember this
+ * file will be included in both sites so caution will robinson!
+ * 
+ * The team responible for this effort - James K, Sal F, Sean H, Will R.
+ * Any comments can be directed to those 4 amazing people.
+ *
+ */
+
+/* TYPOGRAPHY */
+
+body {
+	font: 12px/1.4 'Lucida Grande', Verdana, Arial, sans-serif;
+	color: #222;
+}
+h1 a, h2 a, h3 a {
+	color: #222;
+}
+h1 {
+	font-size: 30px;
+	margin-bottom: 36px;
+}
+
+h2 {
+	font-size: 24px;
+	line-height: 24px;
+	margin-bottom: 18px;
+}
+
+h3 {
+	font-size: 18px;
+	margin-bottom: 18px;
+	line-height: 18px;
+}
+
+h4 {
+	font-size: 16px;
+	margin-bottom: 12px;
+	line-height: 18px;
+}
+
+h5 {
+	font-size: 14px;
+	margin-bottom: 12px;
+}
+
+p {
+	font-size: 12px;
+	line-height: 16px;
+	margin-bottom: 18px;
+}
+
+/* HIDE THE USELESS STUFF */
+
+#top_nav,
+#searchbox,
+#top_tagline,
+#blog_snippet,
+#footer_nav,
+#orgswitch,
+#sidebar { display: none;}
+
+/* CONTACT INFO IN THE FOOTER */
+#contact_info {
+	margin-top: 20px;
+	border-top: 1px solid #eee;
+	padding-top: 0px;
+	font-size: 11px;
+}
+	#contact_info strong {
+		margin: 6px 0 3px 0;
+		display: block;
+	}
+
+/* SHOW LINKS NEXT TO WHAT? LINKS! */
+a:link:after,
+a:visited:after {
+  content: " (" attr(href) ") ";
+  font-size: 80%;
+}
+	/* EXCEPT, NOT THE LOGO! */
+	#header h1 a:link:after,
+	#header a:visited:after {
+	  content: " ";
+	  font-size: 80%;
+	}
