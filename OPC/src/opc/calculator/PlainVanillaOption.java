@@ -18,15 +18,16 @@ import java.text.DecimalFormat;
 public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     // Input
-    private double S;
-    private double X;
-    private double sigma;
-    private double T;
-    private double r;
-    private double b;
-    private String optiontype;
-    private String positionflag;
-    private String optionflag;
+    protected double S;
+    protected  double X;
+    protected  double sigma;
+    protected  double T;
+    protected  double r;
+    protected  double b;
+    protected  String rtype;
+    protected  String timeconvention;
+    protected  String positionflag;
+    protected  String optionflag;
 
     //Intermediate
     private int eta = 0; // eta = 1 for long position; eta = -1 for short position
@@ -41,6 +42,8 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
     private double putdelta = 0.0;
     private double callgamma = 0.0;
     private double putgamma = 0.0;
+    private double callgammaP = 0.0;
+    private double putgammaP = 0.0;
     private double callvega = 0.0;
     private double putvega = 0.0;
     private double calltheta = 0.0;
@@ -66,29 +69,27 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         X = 100;
         T = 0.25;
         r = 0.1;
-        b = 0.1;
         sigma = 0.4;
-        optiontype = "StockOption";
-        positionflag = "long";
-        optionflag = "call";
+        timeconvention = "Years";
+        rtype = "Continuously";
+        positionflag = "Long";
+        optionflag = "Call";
     }
 
-    public PlainVanillaOption(double S, double X, double T, double r, double b, double sigma,
-    String optiontype, String positionflag, String optionflag)
+    public PlainVanillaOption(double S, double X, double T, double r, double sigma,
+            String timeconvention, String rtype, String positionflag, String optionflag)
     {
         this.S = S;
         this.X = X;
-        this.T = T;
-        this.r = r;
-        this.b = b;
+        this.T = Adjustment.getAnnualTime(T, timeconvention);
+        this.r = Adjustment.getContinuousRate(r, rtype);
         this.sigma = sigma;
-        this.optiontype = optiontype;
+        this.timeconvention = timeconvention;
+        this.rtype = rtype;
         this.positionflag = positionflag;
         this.optionflag = optionflag;
     }
-    
-    
-
+   
     public void setCall(double call)
     {
         callprice = call;
@@ -112,12 +113,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
     
     public void setDelta()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             calldelta = eta*exp((b-r)*T)*Nd1;
         }
@@ -139,12 +139,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
      public void setGamma()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             callgamma = eta*(phid1*exp((b-r)*T))/(S*sigma*sqrt(T));
         }
@@ -164,14 +163,33 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         return 0;
     }
 
+    public void setGammaP()
+    {
+        if (optionflag.equals("call")){
+            callgammaP = S*getGamma()/100;
+        }
+        else if (optionflag.equals("put")){
+            putgammaP = S*getGamma()/100;
+        }
+    }
+    
+    public double getGammaP()
+    {
+        if (optionflag.equals("call")){
+            return callgammaP;
+        }
+        else if (optionflag.equals("put")){
+            return putgammaP;
+        }
+        return 0;
+    }
      public void setVega()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             callvega = eta*S*exp((b-r)*T)*phid1*sqrt(T);
         }
@@ -193,12 +211,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
      public void setTheta()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             calltheta = eta*((r-b)*S*exp((b-r)*T)*Nd1
                              - (S*exp((b-r)*T)*phid1*sigma)/(2*sqrt(T))
@@ -224,12 +241,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
    
     public void setRho()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             if (b!=0.0)
             {
@@ -265,12 +281,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public void setElasticity()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             callelasticity = getDelta()*S/getCall();
         }
@@ -292,12 +307,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public void setCarry()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
         if (optionflag.equals("call")){
             callcarry = eta*S*T*exp((b-r)*T)*phid1;
         }
@@ -325,12 +339,11 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public void calculateValue()
     {
-        NormOneDim p = new NormOneDim();
         dvalues();
-        double Nd1 = p.cdf(d1);
-        double Nd2 = p.cdf(d2);
-        double phid1 = p.pdf(d1);
-        double phid2 = p.pdf(d2);
+        double Nd1 = NormOneDim.cdf(d1);
+        double Nd2 = NormOneDim.cdf(d2);
+        double phid1 = NormOneDim.pdf(d1);
+        double phid2 = NormOneDim.pdf(d2);
 
         if (optionflag.equals("call")){
             setCall(S*exp((b-r)*T)*Nd1-X*exp(-r*T)*Nd2);
@@ -394,7 +407,6 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double dividendyield = 0.02;
         String divtype = "Semi-annually";
         double volatility = 0.4;
-        String optiontype = "StockIndexOption";
         String position = "long";
         String option = "put";*/
 
@@ -407,21 +419,20 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double dividendyield = 0.05;
         String divtype = "Monthly";
         double volatility = 0.2;
-        String optiontype = "CurrencyOption";
         String position = "short";
         String option = "call";
 
-        Adjustment adj = new Adjustment();
-        timetomaturity = adj.getAnnualTime(timetomaturity, timeconvention);
-        riskfreerate = adj.getContinuousRate(riskfreerate, rtype);
-        dividendyield = adj.getContinuousRate(dividendyield, divtype);
+        
+        timetomaturity =  Adjustment.getAnnualTime(timetomaturity, timeconvention);
+        riskfreerate =  Adjustment.getContinuousRate(riskfreerate, rtype);
+        dividendyield =  Adjustment.getContinuousRate(dividendyield, divtype);
 
         double costofcarry = riskfreerate - dividendyield;
 
 
 
         PlainVanillaOption pvo = new PlainVanillaOption(stockprice, strikeprice,timetomaturity,
-                                 riskfreerate, costofcarry, volatility, optiontype, position, option);
+                                 riskfreerate, volatility, timeconvention, rtype, position, option);
 
         pvo.longOrShort();
         pvo.callOrPut();
@@ -435,6 +446,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
         double delta = pvo.getDelta();
         double gamma = pvo.getGamma();
+        double gammaP = pvo.getGammaP();
         double vega = pvo.getVega()/100;
         double theta = pvo.getTheta()/365;
         double rho = pvo.getRho()/100;
@@ -444,6 +456,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         String pricestring = opcformat.format(price);
         String deltastring = opcformat.format(delta);
         String gammastring = opcformat.format(gamma);
+        String gammaPstring = opcformat.format(gammaP);
         String vegastring = opcformat.format(vega);
         String thetastring = opcformat.format(theta);
         String rhostring = opcformat.format(rho);
@@ -454,6 +467,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         System.out.println("Value:      " + pricestring);
         System.out.println("Delta:      " + deltastring);
         System.out.println("Gamma:      " + gammastring);
+        System.out.println("GammaP:      " + gammaPstring);
         System.out.println("Vega:       " + vegastring);
         System.out.println("Theta:      " + thetastring);
         System.out.println("Rho:        " + rhostring);
