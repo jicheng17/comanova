@@ -17,6 +17,8 @@ import javax.swing.JComboBox;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import opc.calculator.OptionsCalculatorInterface;
+
 /**
  *
  * @author ZHAO QINGHUA
@@ -81,12 +83,16 @@ public class OPCInputPane extends JPanel {
         // init radio buttons
         longShortGroup = new ButtonGroup();
         timeUnitGroup = new ButtonGroup();
-        longButton = new JRadioButton( "Long" );
+        longButton = new JRadioButton( OptionsCalculatorInterface.LONG_SHORT.LONG );
+        longButton.setActionCommand( OptionsCalculatorInterface.LONG_SHORT.LONG );
         longButton.setSelected( true );
-        shortButton = new JRadioButton( "Short" );
-        yearsButton = new JRadioButton( "Years" );
+        shortButton = new JRadioButton( OptionsCalculatorInterface.LONG_SHORT.SHORT );
+        shortButton.setActionCommand( OptionsCalculatorInterface.LONG_SHORT.SHORT );
+        yearsButton = new JRadioButton( OptionsCalculatorInterface.TIME_UINT.YEAR );
+        yearsButton.setActionCommand( OptionsCalculatorInterface.TIME_UINT.YEAR );
         yearsButton.setSelected( true );
-        daysButton = new JRadioButton( "Days" );
+        daysButton = new JRadioButton( OptionsCalculatorInterface.TIME_UINT.DAY );
+        daysButton.setActionCommand( OptionsCalculatorInterface.TIME_UINT.DAY );
         longShortGroup.add( longButton );
         longShortGroup.add( shortButton );
         timeUnitGroup.add( yearsButton );
@@ -108,14 +114,10 @@ public class OPCInputPane extends JPanel {
         compoundingFrequencyLabel = new JLabel( COMPOUNDING_FREQUENCY_STRING );
 
         // init text fields
-        strikePriceField = new JFormattedTextField();
-        strikePriceField.setColumns( INPUT_FIELD_SIZE );
-        timeToMaturityField = new JFormattedTextField();
-        timeToMaturityField.setColumns( INPUT_FIELD_SIZE );
-        riskFreeRateField = new JFormattedTextField();
-        riskFreeRateField.setColumns( INPUT_FIELD_SIZE );
-        volatilityField = new JFormattedTextField();
-        volatilityField.setColumns( INPUT_FIELD_SIZE );
+        strikePriceField = createTextField();
+        timeToMaturityField = createTextField();
+        riskFreeRateField = createTextField();
+        volatilityField = createTextField();
 
         // bond labels to text fields
         strikePriceLabel.setLabelFor( strikePriceField );
@@ -153,34 +155,78 @@ public class OPCInputPane extends JPanel {
         add(fieldPane, BorderLayout.LINE_END);
     }
 
-    public void addInputComponent( JLabel label, JComponent component, int inputType )
+    protected JFormattedTextField createTextField()
     {
-        label.setLabelFor( component );
+        JFormattedTextField field = new JFormattedTextField();
+        field.setValue( "0.0" );
+        field.setColumns( INPUT_FIELD_SIZE );
 
+        return field;
+    }
+
+    public void addInputComponent( JLabel label, JComponent component, int inputType, int offset )
+    {
         int index = 0;
         switch( inputType )
         {
             case INPUT_TYPE.RADIO_BUTTON:
             {
-                index = numRadioGrp;
+                index = offset;
                 numRadioGrp++;
                 break;
             }
             case INPUT_TYPE.TEXT_FIELD:
             {
-                index = numRadioGrp + numTextField;
+                //component = createTextField();
+                index = numRadioGrp + offset;
                 numTextField++;
                 break;
             }
             case INPUT_TYPE.COMBO_BOX:
             {
-                index = numRadioGrp + numTextField + numComboBox;
+                index = numRadioGrp + numTextField + offset;
                 numComboBox++;
                 break;
             }
         }
 
+        label.setLabelFor( component );
         labelPane.add( label, index );
         fieldPane.add( component, index );
+    }
+
+    public String getStrikePrice()
+    {
+        return (String)strikePriceField.getValue();
+    }
+
+    public String getTimeToMaturity()
+    {
+        return (String)timeToMaturityField.getValue();
+    }
+
+    public String getRiskFreeRate()
+    {
+        return (String)riskFreeRateField.getValue();
+    }
+
+    public String getVolatility()
+    {
+        return (String)volatilityField.getValue();
+    }
+
+    public String getLongShort()
+    {
+        return longShortGroup.getSelection().getActionCommand();
+    }
+
+    public String getTimeUnit()
+    {
+        return timeUnitGroup.getSelection().getActionCommand();
+    }
+
+    public String getCompoundingFrequency()
+    {
+        return compoundingFrequencyComboBox.getSelectedItem().toString();
     }
 }
