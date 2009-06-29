@@ -18,6 +18,12 @@ public interface OptionsCalculatorInterface {
         final String LONG = "Long";
         final String SHORT = "Short";
     }
+
+    public interface CALL_PUT
+    {
+        final String CALL = "Call";
+        final String PUT = "Put";
+    }
     
     public double[][] getPlotArray();
 
