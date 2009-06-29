@@ -46,8 +46,12 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
     private double putgammaP = 0.0;
     private double callvega = 0.0;
     private double putvega = 0.0;
+    private double callvegaP = 0.0;
+    private double putvegaP = 0.0;
     private double calltheta = 0.0;
     private double puttheta = 0.0;
+    private double callspeed = 0.0;
+    private double putspeed = 0.0;
     private double callrho = 0.0;
     private double putrho = 0.0;
     private double callelasticity = 0.0;
@@ -73,7 +77,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         timeconvention = "Years";
         rtype = "Continuously";
         positionflag = "Long";
-        optionflag = "Call";
+        optionflag = CALL_PUT.CALL;
     }
 
     public PlainVanillaOption(double S, double X, double T, double r, double sigma,
@@ -118,20 +122,20 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             calldelta = eta*exp((b-r)*T)*Nd1;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             putdelta = eta*exp((b-r)*T)*(Nd1-1);
         }
     }
 
     public double getDelta()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return calldelta;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putdelta;
         }
         return 0;
@@ -144,20 +148,20 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             callgamma = eta*(phid1*exp((b-r)*T))/(S*sigma*sqrt(T));
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             putgamma = eta*(phid1*exp((b-r)*T))/(S*sigma*sqrt(T));
         }
     }
 
     public double getGamma()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return callgamma;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putgamma;
         }
         return 0;
@@ -165,24 +169,46 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public void setGammaP()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             callgammaP = S*getGamma()/100;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             putgammaP = S*getGamma()/100;
         }
     }
     
     public double getGammaP()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return callgammaP;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putgammaP;
         }
         return 0;
     }
+
+    public void setSpeed()
+    {
+        if (optionflag.equals(CALL_PUT.CALL)){
+            callspeed = -(getGamma()/S)*(d1/(sigma*sqrt(T))+1);
+        }
+        else if (optionflag.equals(CALL_PUT.PUT)){
+            putspeed = -(getGamma()/S)*(d1/(sigma*sqrt(T))+1);
+        }
+    }
+
+    public double getSpeed()
+    {
+        if (optionflag.equals(CALL_PUT.CALL)){
+            return callspeed;
+        }
+        else if (optionflag.equals(CALL_PUT.PUT)){
+            return putspeed;
+        }
+        return 0;
+    }
+
      public void setVega()
     {
         dvalues();
@@ -190,21 +216,43 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             callvega = eta*S*exp((b-r)*T)*phid1*sqrt(T);
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             putvega = eta*S*exp((b-r)*T)*phid1*sqrt(T);
         }
     }
 
     public double getVega()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return callvega;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putvega;
+        }
+        return 0;
+    }
+
+    public void setVegaP()
+    {
+       
+        if (optionflag.equals(CALL_PUT.CALL)){
+            callvegaP = sigma*getVega()/10;
+        }
+        else if (optionflag.equals(CALL_PUT.PUT)){
+            putvegaP = sigma*getVega()/10;
+        }
+    }
+
+    public double getVegaP()
+    {
+        if (optionflag.equals(CALL_PUT.CALL)){
+            return callvegaP;
+        }
+        else if (optionflag.equals(CALL_PUT.PUT)){
+            return putvegaP;
         }
         return 0;
     }
@@ -216,12 +264,12 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             calltheta = eta*((r-b)*S*exp((b-r)*T)*Nd1
                              - (S*exp((b-r)*T)*phid1*sigma)/(2*sqrt(T))
                              - r*X*exp(-r*T)*Nd2);
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             puttheta = eta*((b-r)*S*exp((b-r)*T)*(1-Nd1)
                             +  r*X*exp(-r*T)*(1-Nd2)
                             - (S*exp((b-r)*T)*phid1*sigma)/(2*sqrt(T)));
@@ -230,10 +278,10 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public double getTheta()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return calltheta;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return puttheta;
         }
         return 0;
@@ -246,7 +294,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             if (b!=0.0)
             {
                 callrho = eta*X*T*exp(-r*T)*Nd2;
@@ -256,7 +304,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
                 callrho = -eta*T*getCall();
             }
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             if (b!=0.0)
             {
                 putrho = eta*X*T*exp(-r*T)*(Nd2-1);
@@ -270,10 +318,10 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public double getRho()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return callrho;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putrho;
         }
         return 0;
@@ -286,20 +334,20 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             callelasticity = getDelta()*S/getCall();
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             putelasticity = getDelta()*S/getPut();
         }
     }
 
     public double getElasticity()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return callelasticity;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putelasticity;
         }
         return 0;
@@ -312,20 +360,20 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double Nd2 = NormOneDim.cdf(d2);
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             callcarry = eta*S*T*exp((b-r)*T)*phid1;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             putcarry = eta*S*T*exp((b-r)*T)*(1-phid1);
         }
     }
 
     public double getCarry()
     {
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             return callcarry;
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             return putcarry;
         }
         return 0;
@@ -345,10 +393,10 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         double phid1 = NormOneDim.pdf(d1);
         double phid2 = NormOneDim.pdf(d2);
 
-        if (optionflag.equals("call")){
+        if (optionflag.equals(CALL_PUT.CALL)){
             setCall(S*exp((b-r)*T)*Nd1-X*exp(-r*T)*Nd2);
         }
-        else if (optionflag.equals("put")){
+        else if (optionflag.equals(CALL_PUT.PUT)){
             setPut(X*exp((-r)*T)*(1-Nd2)-S*exp((b-r)*T)*(1-Nd1));
         }
 
@@ -378,17 +426,17 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
 
     public void longOrShort()
     {
-        if (positionflag.equals("long"))
+        if (positionflag.equals(CALL_PUT.CALL))
             eta = 1;
-        else if (positionflag.equals("short"))
+        else if (positionflag.equals(CALL_PUT.PUT))
             eta = -1;
     }
 
     public void callOrPut()
     {
-        if (optionflag.equals("call"))
+        if (optionflag.equals(CALL_PUT.CALL))
             phi = 1;
-        else if (optionflag.equals("put"))
+        else if (optionflag.equals(CALL_PUT.PUT))
             phi = -1;
     }
 
@@ -408,7 +456,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         String divtype = "Semi-annually";
         double volatility = 0.4;
         String position = "long";
-        String option = "put";*/
+        String option = CALL_PUT.PUT;*/
 
         double stockprice = 345;
         double strikeprice = 365;
@@ -420,7 +468,7 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         String divtype = "Monthly";
         double volatility = 0.2;
         String position = "short";
-        String option = "call";
+        String option = CALL_PUT.CALL;
 
         
         timetomaturity =  Adjustment.getAnnualTime(timetomaturity, timeconvention);
@@ -439,9 +487,9 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
         pvo.calculateValue();
 
         double price = 0.0;
-        if (option.equals("call"))
+        if (option.equals(CALL_PUT.CALL))
            price = pvo.getCall();
-        else if (option.equals("put"))
+        else if (option.equals(CALL_PUT.PUT))
            price = pvo.getPut();
 
         double delta = pvo.getDelta();
