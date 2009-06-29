@@ -20,50 +20,53 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 /**
  *
  * @author ZHAO QINGHUA
  */
 public class OPCTabbedPane extends JTabbedPane implements ActionListener {
 
-    private OPCInputPane inputPanel;        // input panel for user input
-    private OPCOutputPane outputPanel;      // output panel for numerical outputs
-    private JComponent leftPanel;           // leftPanel = inputPanel + outputPanel
-    private JComponent rightPanel;          // graph panel for Option Value graph view
-    private JComponent mainPanel;           // the first tab, which combines leftPanel and rightPanel
 
-    private JButton calculateBtn;           // the button to trigger calculation
+    protected OPCInputPane inputPanel;        // input panel for user input
+    protected OPCOutputPane outputPanel;      // output panel for numerical outputs
+    protected JComponent leftPanel;           // leftPanel = inputPanel + outputPanel
+    protected JComponent rightPanel;          // graph panel for Option Value graph view
+    protected JComponent mainPanel;           // the first tab, which combines leftPanel and rightPanel
+
+    protected JButton calculateBtn;           // the button to trigger calculation
 
     //private JComponent valueGraphTab;       // the tab for optionValue graph view
-    private JComponent deltaGraphTab;       // the tab for delta graph view
-    private JComponent elasticityGraphTab;  // the tab for elasticity graph view
-    private JComponent gammaGraphTab;       // the tab for gamma graph view
-    private JComponent dGamaDvolGraphTab;   // the tab for dGammaDvol graph view
-    private JComponent gammaPGraphTab;      // the tab for gammaP graph view
-    private JComponent vegaGraphTab;        // the tab for vega graph view
-    private JComponent dVegalDvolGraphTab;  // the tab for dVegalDvol graph view
-    private JComponent thetaGraphTab;       // the tab for theta graph view
-    private JComponent rhoGraphTab;         // the tab for rho graph view
-    private JComponent dDeltaDvolGraphTab;  // the tab for dDeltaDvol graph view
-    private JComponent speedGraphTab;       // the tab for speed graph view
-    private JComponent deltaXGraphTab;      // the tab for deltaX graph view
+    protected JComponent deltaGraphTab;       // the tab for delta graph view
+    protected JComponent elasticityGraphTab;  // the tab for elasticity graph view
+    protected JComponent gammaGraphTab;       // the tab for gamma graph view
+    protected JComponent dGamaDvolGraphTab;   // the tab for dGammaDvol graph view
+    protected JComponent gammaPGraphTab;      // the tab for gammaP graph view
+    protected JComponent vegaGraphTab;        // the tab for vega graph view
+    protected JComponent dVegalDvolGraphTab;  // the tab for dVegalDvol graph view
+    protected JComponent thetaGraphTab;       // the tab for theta graph view
+    protected JComponent rhoGraphTab;         // the tab for rho graph view
+    protected JComponent dDeltaDvolGraphTab;  // the tab for dDeltaDvol graph view
+    protected JComponent speedGraphTab;       // the tab for speed graph view
+    protected JComponent deltaXGraphTab;      // the tab for deltaX graph view
 
-    private String mainPanelTitle;
+    protected String mainPanelTitle;
 
     //private final String VALUE_TAB_TITLE = "Option Value";
-    private final String CALCULATE_BUTTON_LABEL = "Calculate";
-    private final String DELTA_TAB_TITLE = "Delta";
-    private final String ELASTICITY_TAB_TITLE = "Elasticity";
-    private final String GAMMA_TAB_TITLE = "Gamma";
-    private final String DGAMMA_DVOL_TAB_TITLE = "dGammaDvol";
-    private final String GAMMAP_TAB_TITLE = "GammaP";
-    private final String VEGA_TAB_TITLE = "Vega";
-    private final String DVEGA_DVOL_TAB_TITLE = "dVegaDvol";
-    private final String THETA_TAB_TITLE = "Theta";
-    private final String RHO_TAB_TITLE = "Rho";
-    private final String DDELTA_DVOL_TAB_TITLE = "dDeltaDvol";
-    private final String SPEED_TAB_TITLE = "Speed";
-    private final String DELTAX_TAB_TITLE = "DeltaX";
+    protected final String CALCULATE_BUTTON_LABEL = "Calculate";
+    protected final String DELTA_TAB_TITLE = "Delta";
+    protected final String ELASTICITY_TAB_TITLE = "Elasticity";
+    protected final String GAMMA_TAB_TITLE = "Gamma";
+    protected final String DGAMMA_DVOL_TAB_TITLE = "dGammaDvol";
+    protected final String GAMMAP_TAB_TITLE = "GammaP";
+    protected final String VEGA_TAB_TITLE = "Vega";
+    protected final String DVEGA_DVOL_TAB_TITLE = "dVegaDvol";
+    protected final String THETA_TAB_TITLE = "Theta";
+    protected final String RHO_TAB_TITLE = "Rho";
+    protected final String DDELTA_DVOL_TAB_TITLE = "dDeltaDvol";
+    protected final String SPEED_TAB_TITLE = "Speed";
+    protected final String DELTAX_TAB_TITLE = "DeltaX";
+    private final int INPUT_FIELD_SIZE = 10;
 
 
     public OPCTabbedPane()
@@ -72,12 +75,12 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         //initComponent();
     }
 
-    public void show()
+    public void display()
     {
         initComponent();
     }
 
-    private void initComponent()
+    protected void initComponent()
     {
         calculateBtn = new JButton( CALCULATE_BUTTON_LABEL );
         calculateBtn.addActionListener( this );
@@ -131,7 +134,7 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         //this.setMnemonicAt(3, KeyEvent.VK_4);
     }
 
-    private JComponent makeTextPanel(String text) {
+    protected JComponent makeTextPanel(String text) {
         JPanel panel = new JPanel(false);
         JLabel filler = new JLabel(text);
         filler.setHorizontalAlignment(JLabel.CENTER);
@@ -145,12 +148,19 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         this.mainPanelTitle = newTitle;
     }
 
+    protected JFormattedTextField createTextField()
+    {
+        JFormattedTextField field = new JFormattedTextField();
+        field.setValue( "0.0" );
+        field.setColumns( INPUT_FIELD_SIZE );
+
+        return field;
+    }
+    
     public void actionPerformed( ActionEvent e )
     {
         // Step 1: validate inputs TODO
         // Step 2: send inputs to backend calculator
-
-        
         // Step 3: collect output from backend and refresh output panel
     }
 }

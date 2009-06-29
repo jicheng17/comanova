@@ -34,13 +34,14 @@ import opc.util.OPCTreeNodeNameClassMapConstructor;
  */
 public class OPCMainUI {
 
-    final static int MAIN_FRAME_WIDTH = 1100;
-    final static int MAIN_FRAME_HEIGHT = 600;
+    final static int MAIN_FRAME_WIDTH = 1150;
+    final static int MAIN_FRAME_HEIGHT = 650;
     final static String MAIN_UI_TITLE = "Options Pricing Calculator";
     final static String TREE_ROOT_NAME = "Options Model Types";
+    final static String UI_CLASS_MAP_FILE_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\OPC UI Class Map.config";
+    final static String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\OPC Calculator Class Map.config";
 
     private static HashMap<String,String> treeNodeNameClassMap;
-
     private static JFrame mainFrame;
     private static JSplitPane splitPane;
     private static JTree optionModelTree;
@@ -50,7 +51,7 @@ public class OPCMainUI {
 
     private static void initComponents()
     {
-        treeNodeNameClassMap = OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap();
+        treeNodeNameClassMap = OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap( UI_CLASS_MAP_FILE_LOCATION );
 
         // init main frame
         mainFrame = new JFrame( MAIN_UI_TITLE );
@@ -109,7 +110,7 @@ public class OPCMainUI {
                                 cnfe.printStackTrace();
                             }
                             rightPane.setMainPanelTitle( nodeName );
-                            rightPane.show();
+                            rightPane.display();
                             splitPane.setRightComponent( rightPane );
                         }
                     }

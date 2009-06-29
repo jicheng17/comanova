@@ -15,15 +15,13 @@ import java.io.FileReader;
  */
 public class OPCTreeNodeNameClassMapConstructor {
 
-    final static String INPUT_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\Options Model Class Map.config";
-
-    public static HashMap<String,String> getTreeNodeNameClassMap()
+    public static HashMap<String,String> getTreeNodeNameClassMap( String inputLocation )
     {
         HashMap<String,String> nameClassMap = new HashMap<String,String>();
 
         try
         {
-            BufferedReader br = new BufferedReader( new FileReader(INPUT_LOCATION) );
+            BufferedReader br = new BufferedReader( new FileReader(inputLocation) );
 
             String input = "";
             while( (input=br.readLine()) != null )
@@ -36,7 +34,7 @@ public class OPCTreeNodeNameClassMapConstructor {
         }
         catch( IOException e )
         {
-            System.err.println( "Error when reading input file: " + INPUT_LOCATION + e );
+            System.err.println( "Error when reading input file: " + inputLocation + e );
         }
         catch( Exception e )
         {

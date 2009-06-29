@@ -24,6 +24,12 @@ public interface OptionsCalculatorInterface {
         final String CALL = "Call";
         final String PUT = "Put";
     }
+
+    public interface TIME_UINT
+    {
+        final String YEAR = "Years";
+        final String DAY = "Days";
+    }
     
     public double[][] getPlotArray();
 
