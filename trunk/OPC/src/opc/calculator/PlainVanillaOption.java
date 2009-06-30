@@ -5,9 +5,15 @@
 
 package opc.calculator;
 
-import opc.mathalgo.*;
-import static java.lang.Math.*;
+import static java.lang.Math.exp;
+import static java.lang.Math.log;
+import static java.lang.Math.sqrt;
+
 import java.text.DecimalFormat;
+import java.util.HashMap;
+
+import opc.mathalgo.Adjustment;
+import opc.mathalgo.NormOneDim;
 
 
 
@@ -15,7 +21,7 @@ import java.text.DecimalFormat;
  *
  * @author user
  */
-public class PlainVanillaOption implements OptionsCalculatorInterface{
+public class PlainVanillaOption extends AbstractOptionsCalculator {
 
     // Input
     protected double S;
@@ -440,7 +446,35 @@ public class PlainVanillaOption implements OptionsCalculatorInterface{
             phi = -1;
     }
 
-
+    // calculate options values and sensitivities
+    public void calculate()
+    {
+        // TODO
+    }
+    
+    // send inputs from GUI to corresponding back-end calculators
+    public void sendInputs( HashMap<String,String> inputs )
+    {
+        this.S = Double.parseDouble(inputs.get(CALCULATOR_INPUT.S) );
+        this.X = Double.parseDouble(inputs.get(CALCULATOR_INPUT.X) );
+        this.T = Double.parseDouble(inputs.get(CALCULATOR_INPUT.T) );
+        this.sigma = Double.parseDouble(inputs.get(CALCULATOR_INPUT.SIGMA) );
+        this.timeconvention = inputs.get(CALCULATOR_INPUT.TIME_CONVENTION);
+        this.rtype = inputs.get(CALCULATOR_INPUT.R_TYPE);
+        this.positionflag = inputs.get(CALCULATOR_INPUT.POSITION_FLAG);
+        this.optionflag = inputs.get(CALCULATOR_INPUT.OPTION_FLAG);
+        this.T = Adjustment.getAnnualTime(T, timeconvention);
+        this.r = Adjustment.getContinuousRate(r, rtype);
+    }
+    
+    // get outputs from corresponding back-end calculators to GUI
+    public HashMap<String,String> getOutputs()
+    {
+        HashMap<String,String> output = new HashMap<String,String>();
+        // TODO
+        return output;
+    }
+    
     public static void main(String[] args)
     {
 
