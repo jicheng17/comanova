@@ -5,7 +5,8 @@
 
 package opc.calculator;
 
-import opc.mathalgo.*;
+import java.util.HashMap;
+
 /**
  *
  * @author user
@@ -15,19 +16,11 @@ public class CurrencyOption extends PlainVanillaOption {
     private double rf;
     private String rftype;
 
-    public CurrencyOption() {
-        super();
-        rf = 0.08;
-        rftype = "Continuously";
-        b = r - rf;
-    }
-
-    public CurrencyOption(double S, double X, double T, double r, double rf, double sigma,
-            String timeconvention, String rtype, String rftype, String positionflag, String optionflag)
+    public void sendInputs( HashMap<String,String> inputs )
     {
-        super(S, X, T, r, sigma, timeconvention, rtype, positionflag, optionflag);
-        this.rf = Adjustment.getContinuousRate(rf, rftype);
-        this.rftype = rftype;
-        this.b = r - rf;
+        super.sendInputs(inputs);
+        rf = Double.parseDouble(inputs.get(CALCULATOR_INPUT.RF) );
+        rftype = inputs.get(CALCULATOR_INPUT.RF_TYPE);
+        b = r - rf;
     }
 }

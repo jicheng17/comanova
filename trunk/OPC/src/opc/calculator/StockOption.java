@@ -5,22 +5,17 @@
 
 package opc.calculator;
 
-import opc.mathalgo.*;
+import java.util.HashMap;
+
 /**
  *
  * @author user
  */
 public class StockOption extends PlainVanillaOption {
 
-    public StockOption() {
-        super();
-        b = r;
-    }
-
-    public StockOption(double S, double X, double T, double r, double sigma, 
-        String timeconvention, String rtype, String positionflag, String optionflag)
+    public void sendInputs( HashMap<String,String> inputs )
     {
-        super(S, X, T, r, sigma, timeconvention, rtype, positionflag, optionflag);
-        this.b = r;
+        super.sendInputs(inputs);
+        b = r;
     }
 }

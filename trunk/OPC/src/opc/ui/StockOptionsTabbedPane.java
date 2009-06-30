@@ -14,8 +14,9 @@ import javax.swing.ButtonGroup;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
+import java.util.HashMap;
+
 import opc.calculator.OptionsCalculatorInterface;
-import opc.calculator.StockOption;
 
 /**
  *
@@ -67,53 +68,57 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
     {
         // Step 1: validate inputs TODO
         // Step 2: send inputs to backend calculator
-        double stockPrice = Double.parseDouble( (String)stockPriceField.getValue() );
-        double strikePrice = Double.parseDouble( inputPanel.getStrikePrice() );
-        double timeToMaturity = Double.parseDouble( inputPanel.getTimeToMaturity() );
-        double riskFreeRate = Double.parseDouble( inputPanel.getRiskFreeRate() );
-        double volatility = Double.parseDouble( inputPanel.getVolatility() );
+        String stockPrice = (String)stockPriceField.getValue();
+        String strikePrice = inputPanel.getStrikePrice();
+        String timeToMaturity = inputPanel.getTimeToMaturity();
+        String riskFreeRate = inputPanel.getRiskFreeRate();
+        String volatility = inputPanel.getVolatility();
         String longShort = inputPanel.getLongShort();
         String timeUnit = inputPanel.getTimeUnit();
-        String compoundingFrequency = inputPanel.getCompoundingFrequency();
+        String riskFreeCompounding = inputPanel.getRiskFreeCompounding();
         String callPut = callPutGroup.getSelection().getActionCommand();
 
         System.out.println( stockPrice + " " + strikePrice + " " + timeToMaturity + " " + riskFreeRate + " "
-                + volatility + " " + longShort + " " + timeUnit + " " + compoundingFrequency + " " + callPut );
+                + volatility + " " + longShort + " " + timeUnit + " " + riskFreeCompounding + " " + callPut );
 
-        StockOption calculator = new StockOption( stockPrice, strikePrice, timeToMaturity, riskFreeRate, volatility,
-                timeUnit, compoundingFrequency, longShort, callPut );
-
-        calculator.longOrShort();
-        calculator.callOrPut();
-        calculator.calculateValue();
-
-        double price = 0.0;
-        if (callPut.equals("call"))
-           price = calculator.getCall();
-        else if (callPut.equals("put"))
-           price = calculator.getPut();
-
-        double delta = calculator.getDelta();
-        double gamma = calculator.getGamma();
-        double gammaP = calculator.getGammaP();
-        double vega = calculator.getVega()/100;
-        double theta = calculator.getTheta()/365;
-        double rho = calculator.getRho()/100;
-        double elasticity = calculator.getElasticity();
-        double carry = calculator.getCarry()/100;
-
-        outputPanel.setOptionValue( price );
-
-        /*OptionsCalculatorInterface a = null;
+        OptionsCalculatorInterface a = null;
         try
         {
-            Class<? extends OptionsCalculatorInterface> tabbedPane = Class.forName("opc.calculator.StockOption").asSubclass(OptionsCalculatorInterface.class);
-            a = tabbedPane.newInstance();
+            Class<? extends OptionsCalculatorInterface> b = Class.forName("opc.calculator.StockOption").asSubclass(OptionsCalculatorInterface.class);
+            a = b.newInstance();
         }
         catch (Exception cnfe )
         {
             cnfe.printStackTrace();
-        }*/
+        }
+
+        HashMap<String,String> inputMap = new HashMap<String,String>();
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STOCK_PRICE, stockPrice.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STRIKE_PRICE, strikePrice.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_TO_MATURITY, timeToMaturity.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_RATE, riskFreeRate.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.VOLATILITY, volatility.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.LONG_SHORT, longShort.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_UNIT, timeUnit.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_COMPOUNDING, riskFreeCompounding.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CALL_PUT, callPut.trim() );
+
+        HashMap<String,String> outputMap = new HashMap<String,String>();
+        a.sendInputs(inputMap);
+        a.calculate();
+        outputMap = a.getOutputs();
+
+        outputPanel.setOptionValue( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.OPTION_VALUE) );
+        outputPanel.setDelta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) );
+        outputPanel.setGamma( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) );
+        outputPanel.setVega( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) );
+        outputPanel.setGammaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) );
+        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) );
+        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) );
+        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
+        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
+        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
+
         // Step 3: collect output from backend and refresh output panel
     }
 }

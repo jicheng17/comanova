@@ -26,6 +26,7 @@ public class OPCOutputPane extends JPanel {
     private final String DGAMMA_DVOL_STRING = "dGammaDvol: ";
     private final String GAMMAP_STRING = "GammaP: ";
     private final String VEGA_STRING = "Vega: ";
+    private final String VEGAP_STRING = "VegaP: ";
     private final String DVEGA_DVOL_STRING = "dVegaDvol: ";
     private final String THETA_STRING = "Theta: ";
     private final String RHO_STRING = "Rho: ";
@@ -45,6 +46,7 @@ public class OPCOutputPane extends JPanel {
     private JLabel dGammaDvolLabel;
     private JLabel gammaPLabel;
     private JLabel vegaLabel;
+    private JLabel vegaPLabel;
     private JLabel dVegaDvolLabel;
     private JLabel thetaLabel;
     private JLabel rhoLabel;
@@ -59,6 +61,7 @@ public class OPCOutputPane extends JPanel {
     private JFormattedTextField dGammaDvolField;
     private JFormattedTextField gammaPField;
     private JFormattedTextField vegaField;
+    private JFormattedTextField vegaPField;
     private JFormattedTextField dVegaDvolField;
     private JFormattedTextField thetaField;
     private JFormattedTextField rhoField;
@@ -83,6 +86,7 @@ public class OPCOutputPane extends JPanel {
         dGammaDvolLabel = new JLabel( DGAMMA_DVOL_STRING );
         gammaPLabel = new JLabel( GAMMAP_STRING );
         vegaLabel = new JLabel( VEGA_STRING );
+        vegaPLabel = new JLabel( VEGAP_STRING );
         dVegaDvolLabel = new JLabel( DVEGA_DVOL_STRING );
         thetaLabel = new JLabel( THETA_STRING );
         rhoLabel = new JLabel( RHO_STRING );
@@ -98,6 +102,7 @@ public class OPCOutputPane extends JPanel {
         dGammaDvolField = createTextField();
         gammaPField = createTextField();
         vegaField = createTextField();
+        vegaPField = createTextField();
         dVegaDvolField = createTextField();
         thetaField = createTextField();
         rhoField = createTextField();
@@ -113,6 +118,7 @@ public class OPCOutputPane extends JPanel {
         dGammaDvolLabel.setLabelFor( dGammaDvolField );
         gammaPLabel.setLabelFor( gammaPField );
         vegaLabel.setLabelFor( vegaField );
+        vegaPLabel.setLabelFor( vegaPField );
         dVegaDvolLabel.setLabelFor( dVegaDvolField );
         thetaLabel.setLabelFor( thetaField );
         rhoLabel.setLabelFor( rhoField );
@@ -129,6 +135,7 @@ public class OPCOutputPane extends JPanel {
         labelPane.add( dGammaDvolLabel );
         labelPane.add( gammaPLabel );
         labelPane.add( vegaLabel );
+        labelPane.add( vegaPLabel );
         labelPane.add( dVegaDvolLabel );
         labelPane.add( thetaLabel );
         labelPane.add( rhoLabel );
@@ -145,6 +152,7 @@ public class OPCOutputPane extends JPanel {
         fieldPane.add( dGammaDvolField );
         fieldPane.add( gammaPField );
         fieldPane.add( vegaField );
+        fieldPane.add( vegaPField );
         fieldPane.add( dVegaDvolField );
         fieldPane.add( thetaField );
         fieldPane.add( rhoField );
@@ -189,23 +197,73 @@ public class OPCOutputPane extends JPanel {
     private final String SPEED_STRING = "Speed: ";
     private final String DELTAX_STRING = "DeltaX: ";*/
 
-    public void setOptionValue( double value )
+    public void setOptionValue( String value )
     {
-        optionValueField.setValue( new Double(value) );
+        optionValueField.setValue( value );
     }
 
-    public void setDelta( double value )
+    public void setDelta( String value )
     {
-        deltaField.setValue( new Double(value) );
+        deltaField.setValue( value );
     }
 
-    public void setElasticity( double value )
+    public void setElasticity( String value )
     {
-        elasticityField.setValue( new Double(value) );
+        elasticityField.setValue( value );
     }
 
-    public void setGamma( double value )
+    public void setGamma( String value )
     {
-        gammaField.setValue( new Double(value) );
+        gammaField.setValue( value );
+    }
+
+    public void setDGammaDvol( String value )
+    {
+        dGammaDvolField.setValue( value );
+    }
+
+    public void setGammaP( String value )
+    {
+        gammaPField.setValue( value );
+    }
+
+    public void setVega( String value )
+    {
+        vegaField.setValue( value );
+    }
+
+    public void setVegaP( String value )
+    {
+        vegaPField.setValue( value );
+    }
+
+    public void setDVegaDvol( String value )
+    {
+        dVegaDvolField.setValue( value );
+    }
+
+    public void setTheta( String value )
+    {
+        thetaField.setValue( value );
+    }
+
+    public void setRho( String value )
+    {
+        rhoField.setValue( value );
+    }
+
+    public void setDDeltaDvol( String value )
+    {
+        dDeltaDvolField.setValue( value );
+    }
+
+    public void setSpeed( String value )
+    {
+        speedField.setValue( value );
+    }
+
+    public void setDeltaX( String value )
+    {
+        deltaXField.setValue( value );
     }
 }

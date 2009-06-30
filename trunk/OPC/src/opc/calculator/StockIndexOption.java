@@ -5,7 +5,8 @@
 
 package opc.calculator;
 
-import opc.mathalgo.*;
+import java.util.HashMap;
+
 /**
  *
  * @author user
@@ -15,19 +16,11 @@ public class StockIndexOption extends PlainVanillaOption {
     private double q;
     private String qtype;
 
-    public StockIndexOption() {
-        super();
-        q = 0.02;
-        qtype = "Continuously";
-        b = r - q;
-    }
-
-    public StockIndexOption(double S, double X, double T, double r, double q, double sigma,
-            String timeconvention, String rtype, String qtype, String positionflag, String optionflag)
+    public void sendInputs( HashMap<String,String> inputs )
     {
-        super(S, X, T, r, sigma, timeconvention, rtype, positionflag, optionflag);
-        this.q = Adjustment.getContinuousRate(q, qtype);
-        this.qtype = qtype;
-        this.b = r - q;
+        super.sendInputs(inputs);
+        q = Double.parseDouble(inputs.get(CALCULATOR_INPUT.Q) );
+        qtype = inputs.get(CALCULATOR_INPUT.Q_TYPE);
+        b = r - q;
     }
 }
