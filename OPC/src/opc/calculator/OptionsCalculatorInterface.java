@@ -27,7 +27,7 @@ public interface OptionsCalculatorInterface {
         final String PUT = "Put";
     }
 
-    public interface TIME_UINT
+    public interface TIME_UNIT
     {
         final String YEAR = "Years";
         final String DAY = "Days";
@@ -60,11 +60,32 @@ public interface OptionsCalculatorInterface {
         final String RISK_FREE_RATE = CALCULATOR_INPUT.R;
         final String VOLATILITY = CALCULATOR_INPUT.SIGMA;
         final String TIME_UNIT = CALCULATOR_INPUT.TIME_CONVENTION;
-        final String COMPOUNDING_FREQUENCY = CALCULATOR_INPUT.R_TYPE;
+        final String RISK_FREE_COMPOUNDING = CALCULATOR_INPUT.R_TYPE;
         final String LONG_SHORT = CALCULATOR_INPUT.POSITION_FLAG;
         final String CALL_PUT = CALCULATOR_INPUT.OPTION_FLAG;
+        final String DIVIDEND_YIELD = CALCULATOR_INPUT.Q;
+        final String DIVIDEND_COMPOUNDING = CALCULATOR_INPUT.Q_TYPE;
     }
-    
+
+    public interface GUI_OUTPUT
+    {
+        // TODO: any additional GUI output from calculator will be added here
+        final String OPTION_VALUE = "price";
+        final String DELTA = "delta";
+        final String D_DELTA_DVOL = "dDeltaDvol";
+        final String ELASTICITY = "elasticity";
+        final String GAMMA = "gamma";
+        final String D_GAMMA_DVOL = "dGammaDvol";
+        final String GAMMA_P = "gammaP";
+        final String VEGA = "vega";
+        final String D_VEGA_DVOL = "dVegaDvol";
+        final String VEGA_P = "vegaP";
+        final String SPEED = "speed";
+        final String THETA = "theta";
+        final String RHO = "rho";
+        final String CARRY = "carry";
+    }
+
     // calculate options values and sensitivities
     public void calculate(); 
     

@@ -88,11 +88,11 @@ public class OPCInputPane extends JPanel {
         longButton.setSelected( true );
         shortButton = new JRadioButton( OptionsCalculatorInterface.LONG_SHORT.SHORT );
         shortButton.setActionCommand( OptionsCalculatorInterface.LONG_SHORT.SHORT );
-        yearsButton = new JRadioButton( OptionsCalculatorInterface.TIME_UINT.YEAR );
-        yearsButton.setActionCommand( OptionsCalculatorInterface.TIME_UINT.YEAR );
+        yearsButton = new JRadioButton( OptionsCalculatorInterface.TIME_UNIT.YEAR );
+        yearsButton.setActionCommand( OptionsCalculatorInterface.TIME_UNIT.YEAR );
         yearsButton.setSelected( true );
-        daysButton = new JRadioButton( OptionsCalculatorInterface.TIME_UINT.DAY );
-        daysButton.setActionCommand( OptionsCalculatorInterface.TIME_UINT.DAY );
+        daysButton = new JRadioButton( OptionsCalculatorInterface.TIME_UNIT.DAY );
+        daysButton.setActionCommand( OptionsCalculatorInterface.TIME_UNIT.DAY );
         longShortGroup.add( longButton );
         longShortGroup.add( shortButton );
         timeUnitGroup.add( yearsButton );
@@ -225,7 +225,7 @@ public class OPCInputPane extends JPanel {
         return timeUnitGroup.getSelection().getActionCommand();
     }
 
-    public String getCompoundingFrequency()
+    public String getRiskFreeCompounding()
     {
         return compoundingFrequencyComboBox.getSelectedItem().toString();
     }
