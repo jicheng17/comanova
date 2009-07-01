@@ -5,27 +5,25 @@
 package opc.ui;
 
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JSplitPane;
-import javax.swing.BorderFactory;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.lang.Class;
-
-import opc.util.OPCTreeNode;
 import opc.util.OPCTreeConstructor;
+import opc.util.OPCTreeNode;
 import opc.util.OPCTreeNodeNameClassMapConstructor;
 
 /**
@@ -41,7 +39,8 @@ public class OPCMainUI {
     final static String UI_CLASS_MAP_FILE_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\OPC UI Class Map.config";
     final static String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\OPC Calculator Class Map.config";
 
-    private static HashMap<String,String> treeNodeNameClassMap;
+    public static HashMap<String, String> treeNodeNameCalculatorClassMap;
+    private static HashMap<String,String> treeNodeNameUIClassMap;
     private static JFrame mainFrame;
     private static JSplitPane splitPane;
     private static JTree optionModelTree;
@@ -51,8 +50,11 @@ public class OPCMainUI {
 
     private static void initComponents()
     {
-        treeNodeNameClassMap = OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap( UI_CLASS_MAP_FILE_LOCATION );
-
+        treeNodeNameCalculatorClassMap = 
+            OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap( CALCULATOR_CLASS_MAP_FILE_LOCATION );
+        treeNodeNameUIClassMap = 
+            OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap( UI_CLASS_MAP_FILE_LOCATION );
+        
         // init main frame
         mainFrame = new JFrame( MAIN_UI_TITLE );
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,7 +100,7 @@ public class OPCMainUI {
                         if( nodeSelected.isLeaf() )
                         {
                             String nodeName = (String)nodeSelected.getUserObject();
-                            String nodeClass = treeNodeNameClassMap.get(nodeName);
+                            String nodeClass = treeNodeNameUIClassMap.get(nodeName);
                             OPCTabbedPane rightPane = new OPCTabbedPane();
                             try
                             {
