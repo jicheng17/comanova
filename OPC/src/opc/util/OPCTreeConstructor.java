@@ -17,7 +17,7 @@ public class OPCTreeConstructor {
 
     final static String TREE_ROOT_NAME = "Options Model Types";
     //final static String INPUT_LOCATION = "..\\conf\\Options Model Types.config";
-    final static String INPUT_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\Options Model Types.config";
+    final static String INPUT_LOCATION = "C:\\conf\\Options Model Types.config";
 
     public static OPCTreeNode constructTree() 
     {
