@@ -72,6 +72,7 @@ public interface OptionsCalculatorInterface {
         // TODO: any additional GUI output from calculator will be added here
         final String OPTION_VALUE = "price";
         final String DELTA = "delta";
+        final String DELTAX = "deltaX";
         final String D_DELTA_DVOL = "dDeltaDvol";
         final String ELASTICITY = "elasticity";
         final String GAMMA = "gamma";

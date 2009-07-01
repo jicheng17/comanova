@@ -245,5 +245,9 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
         outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
         outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
+        outputPanel.setDDeltaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_DELTA_DVOL) );
+        outputPanel.setDGammaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_GAMMA_DVOL) );
+        outputPanel.setDVegaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_VEGA_DVOL) );
+        outputPanel.setDeltaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTAX) );
     }
 }
