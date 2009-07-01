@@ -65,6 +65,22 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         }
     }
 
+    public void setDeltaX()
+    {
+        double Nd2 = NormOneDim.cdf(d2);
+        if (optionflag.equals(CALL_PUT.CALL)){
+            deltaX = -eta*exp(-r*T)*Nd2;
+        }
+        else if (optionflag.equals(CALL_PUT.PUT)){
+            deltaX = eta*exp(-r*T)*(1-Nd2);
+        }
+    }
+    public void setDDeltaDvol()
+    {
+        double phid1 = NormOneDim.pdf(d1);
+        dDeltaDvol = -eta*(exp((b-r)*T)*d2/sigma)*phid1/100;
+    }
+
     public void setGamma()
     {
         double phid1 = NormOneDim.pdf(d1);
@@ -76,6 +92,11 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         gammaP = S*gamma/100;
     }
 
+    public void setDGammaDvol()
+    {
+        dGammaDvol = gamma*(d1*d2-1)/sigma/100;
+    }
+
     public void setSpeed()
     {
         speed = -(gamma/S)*(d1/(sigma*sqrt(T))+1);
@@ -84,12 +105,17 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
     public void setVega()
     {
         double phid1 = NormOneDim.pdf(d1);
-        vega = eta*S*exp((b-r)*T)*phid1*sqrt(T);
+        vega = eta*S*exp((b-r)*T)*phid1*sqrt(T)/100;
     }
 
     public void setVegaP()
     {
         vegaP = sigma*vega/10;
+    }
+
+    public void setDVegaDvol()
+    {
+        dVegaDvol = vega*(d1*d2)/sigma/100;
     }
 
     public void setTheta()
@@ -107,6 +133,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
                             +  r*X*exp(-r*T)*(1-Nd2)
                             - (S*exp((b-r)*T)*phid1*sigma)/(2*sqrt(T)));
         }
+        theta = theta / 365;
     }
 
     public void setRho()
@@ -134,6 +161,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
                 rho = -eta*T*price;
             }
         }
+        rho = rho / 100;
     }
 
     public void setElasticity()
@@ -150,6 +178,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         else if (optionflag.equals(CALL_PUT.PUT)){
             carry = eta*S*T*exp((b-r)*T)*(1-phid1);
         }
+        carry = carry / 100;
     }
 
     private void dvalues()
@@ -194,10 +223,14 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
 
         setPrice();
         setDelta();
+        setDeltaX();
+        setDDeltaDvol();
         setGamma();
         setGammaP();
+        setDGammaDvol();
         setVega();
         setVegaP();
+        setDVegaDvol();
         setTheta();
         setRho();
         setElasticity();
@@ -228,6 +261,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
 
         outputMap.put( GUI_OUTPUT.OPTION_VALUE, df.format(price) + "" );
         outputMap.put( GUI_OUTPUT.DELTA, df.format(delta) + "" );
+        outputMap.put( GUI_OUTPUT.DELTAX, df.format(deltaX) + "" );
         outputMap.put( GUI_OUTPUT.D_DELTA_DVOL, df.format(dDeltaDvol) + "" );
         outputMap.put( GUI_OUTPUT.D_GAMMA_DVOL, df.format(dGammaDvol) + "" );
         outputMap.put( GUI_OUTPUT.D_VEGA_DVOL, df.format(dVegaDvol) + "" );
