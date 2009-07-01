@@ -5,21 +5,23 @@
 
 package opc.ui;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JComponent;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.JFormattedTextField;
-import javax.swing.JButton;
-
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+
+import opc.calculator.OptionsCalculatorInterface;
 
 /**
  *
@@ -162,5 +164,86 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         // Step 1: validate inputs TODO
         // Step 2: send inputs to backend calculator
         // Step 3: collect output from backend and refresh output panel
+        ArrayList<String> errorList = validateInputs();
+        
+        if( errorList.size() > 0 )
+        {
+            // TODO pop up a dialogue box to show error message
+            return;
+        }
+        
+        OptionsCalculatorInterface calculator = getCalculatorInstance();
+        if( calculator == null ) // class cast exception possibly 
+        {
+            System.out.println( "Error in initializing calculator instance for " + mainPanelTitle );
+            return;
+        }
+        HashMap<String,String> inputMap = constructInputMap();
+        calculator.sendInputs( inputMap );
+        calculator.calculate();
+        HashMap<String,String> outputMap = calculator.getOutputs();
+        
+        refreshOutput( outputMap );
+    }
+    
+    public ArrayList<String> validateInputs()
+    {
+        // TODO
+        ArrayList<String> errorList = new ArrayList<String>();
+        return errorList;
+    }
+    
+    public OptionsCalculatorInterface getCalculatorInstance()
+    {
+        String className = OPCMainUI.treeNodeNameCalculatorClassMap.get( mainPanelTitle );
+        OptionsCalculatorInterface result = null;
+        try
+        {
+            Class<? extends OptionsCalculatorInterface> factory = Class.forName(className).asSubclass(OptionsCalculatorInterface.class);
+            result = factory.newInstance();
+        }
+        catch (Exception cnfe )
+        {
+            cnfe.printStackTrace();
+        }    
+        
+        return result;
+    }
+    
+    public HashMap<String,String> constructInputMap()
+    {
+        HashMap<String,String> inputMap = new HashMap<String,String>();
+        
+        String strikePrice = inputPanel.getStrikePrice();
+        String timeToMaturity = inputPanel.getTimeToMaturity();
+        String riskFreeRate = inputPanel.getRiskFreeRate();
+        String volatility = inputPanel.getVolatility();
+        String longShort = inputPanel.getLongShort();
+        String timeUnit = inputPanel.getTimeUnit();
+        String riskFreeCompounding = inputPanel.getRiskFreeCompounding();
+        
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STRIKE_PRICE, strikePrice.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_TO_MATURITY, timeToMaturity.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_RATE, riskFreeRate.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.VOLATILITY, volatility.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.LONG_SHORT, longShort.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_UNIT, timeUnit.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_COMPOUNDING, riskFreeCompounding.trim() );
+        
+        return inputMap;
+    }
+    
+    public void refreshOutput( HashMap<String,String> outputMap )
+    {
+        outputPanel.setOptionValue( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.OPTION_VALUE) );
+        outputPanel.setDelta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) );
+        outputPanel.setGamma( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) );
+        outputPanel.setVega( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) );
+        outputPanel.setGammaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) );
+        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) );
+        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) );
+        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
+        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
+        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
     }
 }

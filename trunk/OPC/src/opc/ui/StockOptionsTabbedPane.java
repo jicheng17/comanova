@@ -5,16 +5,14 @@
 
 package opc.ui;
 
+import java.awt.GridLayout;
+import java.util.HashMap;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-
-import java.util.HashMap;
 
 import opc.calculator.OptionsCalculatorInterface;
 
@@ -64,61 +62,23 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
     }
     
-    public void actionPerformed( ActionEvent e )
+    public HashMap<String,String> constructInputMap()
     {
-        // Step 1: validate inputs TODO
-        // Step 2: send inputs to backend calculator
+        HashMap<String,String> inputMap = super.constructInputMap();
+        
+        // add additional inputs for this particular option type
         String stockPrice = (String)stockPriceField.getValue();
-        String strikePrice = inputPanel.getStrikePrice();
-        String timeToMaturity = inputPanel.getTimeToMaturity();
-        String riskFreeRate = inputPanel.getRiskFreeRate();
-        String volatility = inputPanel.getVolatility();
-        String longShort = inputPanel.getLongShort();
-        String timeUnit = inputPanel.getTimeUnit();
-        String riskFreeCompounding = inputPanel.getRiskFreeCompounding();
         String callPut = callPutGroup.getSelection().getActionCommand();
-
-        System.out.println( stockPrice + " " + strikePrice + " " + timeToMaturity + " " + riskFreeRate + " "
-                + volatility + " " + longShort + " " + timeUnit + " " + riskFreeCompounding + " " + callPut );
-
-        OptionsCalculatorInterface a = null;
-        try
-        {
-            Class<? extends OptionsCalculatorInterface> b = Class.forName("opc.calculator.StockOption").asSubclass(OptionsCalculatorInterface.class);
-            a = b.newInstance();
-        }
-        catch (Exception cnfe )
-        {
-            cnfe.printStackTrace();
-        }
-
-        HashMap<String,String> inputMap = new HashMap<String,String>();
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STOCK_PRICE, stockPrice.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STRIKE_PRICE, strikePrice.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_TO_MATURITY, timeToMaturity.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_RATE, riskFreeRate.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.VOLATILITY, volatility.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.LONG_SHORT, longShort.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_UNIT, timeUnit.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_COMPOUNDING, riskFreeCompounding.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CALL_PUT, callPut.trim() );
-
-        HashMap<String,String> outputMap = new HashMap<String,String>();
-        a.sendInputs(inputMap);
-        a.calculate();
-        outputMap = a.getOutputs();
-
-        outputPanel.setOptionValue( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.OPTION_VALUE) );
-        outputPanel.setDelta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) );
-        outputPanel.setGamma( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) );
-        outputPanel.setVega( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) );
-        outputPanel.setGammaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) );
-        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) );
-        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) );
-        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
-        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
-        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
-
-        // Step 3: collect output from backend and refresh output panel
+        
+        return inputMap;
+    }
+    
+    public void refreshOutput( HashMap<String,String> outputMap )
+    {
+        super.refreshOutput( outputMap );
+        
+        // update additional outputs for this particular option type
     }
 }
