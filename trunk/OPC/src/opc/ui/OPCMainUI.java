@@ -36,8 +36,8 @@ public class OPCMainUI {
     final static int MAIN_FRAME_HEIGHT = 650;
     final static String MAIN_UI_TITLE = "Options Pricing Calculator";
     final static String TREE_ROOT_NAME = "Options Model Types";
-    final static String UI_CLASS_MAP_FILE_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\OPC UI Class Map.config";
-    final static String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\conf\\OPC Calculator Class Map.config";
+    final static String UI_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC UI Class Map.config";
+    final static String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC Calculator Class Map.config";
 
     public static HashMap<String, String> treeNodeNameCalculatorClassMap;
     private static HashMap<String,String> treeNodeNameUIClassMap;
