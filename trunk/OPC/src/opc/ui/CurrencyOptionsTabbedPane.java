@@ -69,7 +69,7 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
         callPutPane.add( putButton );
 
         inputPanel.addInputComponent( currencySpotPriceLabel, currencySpotPriceField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 0 );
-        inputPanel.addInputComponent( foreignRiskFreeRateLabel, foreignRiskFreeRateField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 3 );
+        inputPanel.addInputComponent( foreignRiskFreeRateLabel, foreignRiskFreeRateField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 4 );
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
         inputPanel.addInputComponent( foreignRiskCompoundingLabel, foreignRiskCompoundingComboBox, 
                 OPCInputPane.INPUT_TYPE.COMBO_BOX, 1 );
@@ -85,7 +85,7 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
         String foreignRiskFreeRate = (String)foreignRiskFreeRateField.getValue();
         String foreignRiskCompounding = (String)foreignRiskCompoundingComboBox.getSelectedItem();
         
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STOCK_INDEX_PRICE, currencySpotPrice.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CURRENCY_SPOT_PRICE, currencySpotPrice.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CALL_PUT, callPut.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.DIVIDEND_YIELD, foreignRiskFreeRate.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.DIVIDEND_COMPOUNDING, foreignRiskCompounding.trim() );
