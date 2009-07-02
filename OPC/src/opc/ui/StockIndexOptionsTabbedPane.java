@@ -69,7 +69,7 @@ public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
         callPutPane.add( putButton );
 
         inputPanel.addInputComponent( stockIndexPriceLabel, stockIndexPriceField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 0 );
-        inputPanel.addInputComponent( dividendYieldLabel, dividendYieldField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 3 );
+        inputPanel.addInputComponent( dividendYieldLabel, dividendYieldField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 4 );
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
         inputPanel.addInputComponent( dividendCompoundingLabel, dividendCompoundingComboBox, 
                 OPCInputPane.INPUT_TYPE.COMBO_BOX, 1 );
