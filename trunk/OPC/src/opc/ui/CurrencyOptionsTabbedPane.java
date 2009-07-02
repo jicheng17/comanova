@@ -87,8 +87,8 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
         
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CURRENCY_SPOT_PRICE, currencySpotPrice.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CALL_PUT, callPut.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.DIVIDEND_YIELD, foreignRiskFreeRate.trim() );
-        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.DIVIDEND_COMPOUNDING, foreignRiskCompounding.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.FOREIGN_RISK_FREE_RATE, foreignRiskFreeRate.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.FOREIGN_RISK_COMPOUNDING, foreignRiskCompounding.trim() );
         
         return inputMap;
     }
