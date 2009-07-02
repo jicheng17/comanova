@@ -5,19 +5,20 @@
 
 package opc.ui;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JFormattedTextField;
-import javax.swing.BorderFactory;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
 import opc.calculator.OptionsCalculatorInterface;
+import opc.util.UIComponentCreator;
 
 /**
  *
@@ -38,9 +39,7 @@ public class OPCInputPane extends JPanel {
     private final String TIME_TO_MATURITY_STRING = "Time to Maturity: ";
     private final String RISK_FREE_RATE_STRING = "Risk-free Rate: ";
     private final String VOLATILITY_STRING = "Volatility: ";
-    private final String COMPOUNDING_FREQUENCY_STRING = "Compounding Frequency: ";
-    private final String[] COMPOUNDING_FREQUENCY_ITEMS = { "Continuously", "Annually", "Semi-annually", "Quarterly", "Monthly" };
-    private final int INPUT_FIELD_SIZE = 10;
+    private final String RISK_FREE_COMPOUNDING_STRING = "Risk Free Compounding : ";
 
     private int numRadioGrp = 2;    // number of radio button groups in the input panel
     private int numTextField = 4;   // number of text fields in the input panel
@@ -57,7 +56,7 @@ public class OPCInputPane extends JPanel {
     private JRadioButton yearsButton;
     private JRadioButton daysButton;
 
-    private JComboBox compoundingFrequencyComboBox;
+    private JComboBox riskFreeCompoundingComboBox;
 
     private JLabel longShortLabel;
     private JLabel timeUnitLabel;
@@ -65,7 +64,7 @@ public class OPCInputPane extends JPanel {
     private JLabel timeToMaturityLabel;
     private JLabel riskFreeRateLabel;
     private JLabel volatilityLabel;
-    private JLabel compoundingFrequencyLabel;
+    private JLabel riskFreeCompoundingLabel;
 
     private JFormattedTextField strikePriceField;
     private JFormattedTextField timeToMaturityField;
@@ -83,20 +82,10 @@ public class OPCInputPane extends JPanel {
         // init radio buttons
         longShortGroup = new ButtonGroup();
         timeUnitGroup = new ButtonGroup();
-        longButton = new JRadioButton( OptionsCalculatorInterface.LONG_SHORT.LONG );
-        longButton.setActionCommand( OptionsCalculatorInterface.LONG_SHORT.LONG );
-        longButton.setSelected( true );
-        shortButton = new JRadioButton( OptionsCalculatorInterface.LONG_SHORT.SHORT );
-        shortButton.setActionCommand( OptionsCalculatorInterface.LONG_SHORT.SHORT );
-        yearsButton = new JRadioButton( OptionsCalculatorInterface.TIME_UNIT.YEAR );
-        yearsButton.setActionCommand( OptionsCalculatorInterface.TIME_UNIT.YEAR );
-        yearsButton.setSelected( true );
-        daysButton = new JRadioButton( OptionsCalculatorInterface.TIME_UNIT.DAY );
-        daysButton.setActionCommand( OptionsCalculatorInterface.TIME_UNIT.DAY );
-        longShortGroup.add( longButton );
-        longShortGroup.add( shortButton );
-        timeUnitGroup.add( yearsButton );
-        timeUnitGroup.add( daysButton );
+        longShortGroup.add( longButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.LONG_SHORT.LONG, true) );
+        longShortGroup.add( shortButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.LONG_SHORT.SHORT, false) );
+        timeUnitGroup.add( yearsButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.TIME_UNIT.YEAR, true) );
+        timeUnitGroup.add( daysButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.TIME_UNIT.DAY, false) );
         JPanel longShortPane = new JPanel( new GridLayout(1,0) );
         longShortPane.add( longButton );
         longShortPane.add( shortButton );
@@ -111,13 +100,13 @@ public class OPCInputPane extends JPanel {
         timeToMaturityLabel = new JLabel( TIME_TO_MATURITY_STRING );
         riskFreeRateLabel = new JLabel( RISK_FREE_RATE_STRING );
         volatilityLabel = new JLabel( VOLATILITY_STRING );
-        compoundingFrequencyLabel = new JLabel( COMPOUNDING_FREQUENCY_STRING );
+        riskFreeCompoundingLabel = new JLabel( RISK_FREE_COMPOUNDING_STRING );
 
         // init text fields
-        strikePriceField = createTextField();
-        timeToMaturityField = createTextField();
-        riskFreeRateField = createTextField();
-        volatilityField = createTextField();
+        strikePriceField = UIComponentCreator.createTextField();
+        timeToMaturityField = UIComponentCreator.createTextField();
+        riskFreeRateField = UIComponentCreator.createTextField();
+        volatilityField = UIComponentCreator.createTextField();
 
         // bond labels to text fields
         strikePriceLabel.setLabelFor( strikePriceField );
@@ -126,7 +115,7 @@ public class OPCInputPane extends JPanel {
         volatilityLabel.setLabelFor( volatilityField );
 
         // init combo boxes
-        compoundingFrequencyComboBox = new JComboBox( COMPOUNDING_FREQUENCY_ITEMS );
+        riskFreeCompoundingComboBox = UIComponentCreator.createCompoundingComboBox();
 
         //Lay out the labels in a panel.
         labelPane = new JPanel(new GridLayout(0,1));
@@ -136,7 +125,7 @@ public class OPCInputPane extends JPanel {
         labelPane.add( timeToMaturityLabel );
         labelPane.add( riskFreeRateLabel );
         labelPane.add( volatilityLabel );
-        labelPane.add( compoundingFrequencyLabel );
+        labelPane.add( riskFreeCompoundingLabel );
 
         //Layout the text fields in a panel.
         fieldPane = new JPanel(new GridLayout(0,1));
@@ -146,22 +135,13 @@ public class OPCInputPane extends JPanel {
         fieldPane.add( timeToMaturityField );
         fieldPane.add( riskFreeRateField );
         fieldPane.add( volatilityField );
-        fieldPane.add( compoundingFrequencyComboBox );
+        fieldPane.add( riskFreeCompoundingComboBox );
 
         //Put the panels in this panel, labels on left,
         //text fields on right.
         setBorder(BorderFactory.createTitledBorder("INPUT"));
         add(labelPane, BorderLayout.CENTER);
         add(fieldPane, BorderLayout.LINE_END);
-    }
-
-    protected JFormattedTextField createTextField()
-    {
-        JFormattedTextField field = new JFormattedTextField();
-        field.setValue( "0.0" );
-        field.setColumns( INPUT_FIELD_SIZE );
-
-        return field;
     }
 
     public void addInputComponent( JLabel label, JComponent component, int inputType, int offset )
@@ -227,6 +207,6 @@ public class OPCInputPane extends JPanel {
 
     public String getRiskFreeCompounding()
     {
-        return compoundingFrequencyComboBox.getSelectedItem().toString();
+        return riskFreeCompoundingComboBox.getSelectedItem().toString();
     }
 }

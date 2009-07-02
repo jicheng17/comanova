@@ -55,6 +55,9 @@ public interface OptionsCalculatorInterface {
     {
         // TODO: any additional GUI input towards calculator input mapping will be added here
         final String STOCK_PRICE = CALCULATOR_INPUT.S;
+        final String STOCK_INDEX_PRICE = CALCULATOR_INPUT.S;
+        final String CURRENCY_SPOT_PRICE = CALCULATOR_INPUT.S;
+        final String FUTURES_PRICE = CALCULATOR_INPUT.S;
         final String STRIKE_PRICE = CALCULATOR_INPUT.X;
         final String TIME_TO_MATURITY = CALCULATOR_INPUT.T;
         final String RISK_FREE_RATE = CALCULATOR_INPUT.R;
@@ -65,6 +68,8 @@ public interface OptionsCalculatorInterface {
         final String CALL_PUT = CALCULATOR_INPUT.OPTION_FLAG;
         final String DIVIDEND_YIELD = CALCULATOR_INPUT.Q;
         final String DIVIDEND_COMPOUNDING = CALCULATOR_INPUT.Q_TYPE;
+        final String FOREIGN_RISK_FREE_RATE = CALCULATOR_INPUT.RF;
+        final String FOREIGN_RISK_COMPOUNDING = CALCULATOR_INPUT.RF_TYPE;
     }
 
     public interface GUI_OUTPUT

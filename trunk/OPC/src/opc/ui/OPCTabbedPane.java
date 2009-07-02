@@ -14,7 +14,6 @@ import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -68,7 +67,6 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     protected final String DDELTA_DVOL_TAB_TITLE = "dDeltaDvol";
     protected final String SPEED_TAB_TITLE = "Speed";
     protected final String DELTAX_TAB_TITLE = "DeltaX";
-    private final int INPUT_FIELD_SIZE = 10;
 
 
     public OPCTabbedPane()
@@ -148,15 +146,6 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     public void setMainPanelTitle( String newTitle )
     {
         this.mainPanelTitle = newTitle;
-    }
-
-    protected JFormattedTextField createTextField()
-    {
-        JFormattedTextField field = new JFormattedTextField();
-        field.setValue( "0.0" );
-        field.setColumns( INPUT_FIELD_SIZE );
-
-        return field;
     }
     
     public void actionPerformed( ActionEvent e )

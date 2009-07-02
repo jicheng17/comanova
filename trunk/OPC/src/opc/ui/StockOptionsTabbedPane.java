@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import opc.calculator.OptionsCalculatorInterface;
+import opc.util.UIComponentCreator;
 
 /**
  *
@@ -25,11 +26,11 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
     private final String STOCK_PRICE_STRING = "Stock Price: ";
     private final String CALL_PUT_STRING = "Call/Put: ";
 
-    protected JLabel stockPriceLabel;
-    protected JLabel callPutLabel;
-    protected JFormattedTextField stockPriceField;
-    protected JRadioButton callButton;
-    protected JRadioButton putButton;
+    private JLabel stockPriceLabel;
+    private JLabel callPutLabel;
+    private JFormattedTextField stockPriceField;
+    private JRadioButton callButton;
+    private JRadioButton putButton;
     private ButtonGroup callPutGroup;
 
     public StockOptionsTabbedPane()
@@ -43,17 +44,11 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
 
         stockPriceLabel = new JLabel( STOCK_PRICE_STRING );
         callPutLabel = new JLabel( CALL_PUT_STRING );
-
-        stockPriceField = createTextField();
-
-        callButton = new JRadioButton( OptionsCalculatorInterface.CALL_PUT.CALL );
-        callButton.setSelected( true );
-        callButton.setActionCommand( OptionsCalculatorInterface.CALL_PUT.CALL );
-        putButton = new JRadioButton( OptionsCalculatorInterface.CALL_PUT.PUT );
-        putButton.setActionCommand( OptionsCalculatorInterface.CALL_PUT.PUT );
+        stockPriceField = UIComponentCreator.createTextField();
+        stockPriceLabel.setLabelFor( stockPriceField );
         callPutGroup = new ButtonGroup();
-        callPutGroup.add( callButton );
-        callPutGroup.add( putButton );
+        callPutGroup.add( callButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.CALL_PUT.CALL, true) );
+        callPutGroup.add( putButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.CALL_PUT.PUT, false) );
         JPanel callPutPane = new JPanel( new GridLayout(1,0) );
         callPutPane.add( callButton );
         callPutPane.add( putButton );
