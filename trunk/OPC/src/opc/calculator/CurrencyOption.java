@@ -13,9 +13,6 @@ import java.util.HashMap;
  */
 public class CurrencyOption extends PlainVanillaOption {
 
-    private double rf;
-    private String rftype;
-
     public void sendInputs( HashMap<String,String> inputs )
     {
         super.sendInputs(inputs);

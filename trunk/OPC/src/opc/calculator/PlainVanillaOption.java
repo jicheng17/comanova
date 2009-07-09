@@ -110,7 +110,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
 
     public void setVegaP()
     {
-        vegaP = sigma*vega/10;
+        vegaP = (sigma*100)*vega/10;
     }
 
     public void setDVegaDvol()
