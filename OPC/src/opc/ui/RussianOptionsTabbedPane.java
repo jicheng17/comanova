@@ -52,7 +52,8 @@ public class RussianOptionsTabbedPane extends OPCTabbedPane {
         }
         tabbedPane.initComponent();
         tabbedPane.inputPanel.addInputComponent( optionTypeLabel, optionTypeComboBox, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
-        tabbedPane.inputPanel.disableTimeToMaturity();
+        tabbedPane.inputPanel.removeTimeToMaturity();
+        tabbedPane.inputPanel.removeTimeUnit();
         inputPanel.reconstructInputPane( tabbedPane.inputPanel );
     }
 
@@ -76,7 +77,8 @@ public class RussianOptionsTabbedPane extends OPCTabbedPane {
 
             tabbedPane.initComponent();
             tabbedPane.inputPanel.addInputComponent( optionTypeLabel, optionTypeComboBox, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
-            tabbedPane.inputPanel.disableTimeToMaturity();
+            tabbedPane.inputPanel.removeTimeToMaturity();
+            tabbedPane.inputPanel.removeTimeUnit();
             inputPanel.reconstructInputPane( tabbedPane.inputPanel );
             
             return;
