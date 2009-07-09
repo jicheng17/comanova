@@ -4,12 +4,19 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButton;
 
+import opc.calculator.OptionsCalculatorInterface;
+
 public class UIComponentCreator {
 
     private static final int INPUT_FIELD_SIZE = 10;
     private static final String INPUT_FIELD_DEFAULT_VALUE = "0";
     private static final String[] COMPOUNDING_FREQUENCY_ITEMS = 
         { "Continuously", "Annually", "Semi-annually", "Quarterly", "Monthly" };
+    private static final String[] BASIC_OPTION_TYPES =
+        { OptionsCalculatorInterface.OPTION_TYPE.STOCK_OPTION,
+          OptionsCalculatorInterface.OPTION_TYPE.STOCK_INDEX_OPTION,
+          OptionsCalculatorInterface.OPTION_TYPE.CURRENCY_OPTION,
+          OptionsCalculatorInterface.OPTION_TYPE.FUTURES_OPTION };
     
     public static JFormattedTextField createTextField()
     {
@@ -33,4 +40,10 @@ public class UIComponentCreator {
     {
         return new JComboBox( COMPOUNDING_FREQUENCY_ITEMS );
     }
+
+    public static JComboBox createOptionTypeComboBox()
+    {
+        return new JComboBox( BASIC_OPTION_TYPES );
+    }
+    
 }

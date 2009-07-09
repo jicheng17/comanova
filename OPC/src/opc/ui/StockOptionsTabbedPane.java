@@ -64,6 +64,9 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
         // add additional inputs for this particular option type
         String stockPrice = (String)stockPriceField.getValue();
         String callPut = callPutGroup.getSelection().getActionCommand();
+
+        System.out.println( "stock price:" + stockPrice );
+        
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STOCK_PRICE, stockPrice.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.CALL_PUT, callPut.trim() );
         

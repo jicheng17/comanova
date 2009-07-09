@@ -32,10 +32,19 @@ public interface OptionsCalculatorInterface {
         final String YEAR = "Years";
         final String DAY = "Days";
     }
+
+    public interface OPTION_TYPE
+    {
+        final String STOCK_OPTION = "Stock Options";
+        final String STOCK_INDEX_OPTION = "Stock Indexes Options";
+        final String CURRENCY_OPTION = "Currency Options";
+        final String FUTURES_OPTION = "Futures Options";
+    }
     
     public interface CALCULATOR_INPUT
     {
         // TODO: any additional calculator input will be added here
+        final String OPTION_TYPE = "optiontype";
         final String S = "S";
         final String X = "X";
         final String T = "T";
@@ -54,6 +63,7 @@ public interface OptionsCalculatorInterface {
     public interface GUI_INPUT
     {
         // TODO: any additional GUI input towards calculator input mapping will be added here
+        final String OPTION_TYPE = CALCULATOR_INPUT.OPTION_TYPE;
         final String STOCK_PRICE = CALCULATOR_INPUT.S;
         final String STOCK_INDEX_PRICE = CALCULATOR_INPUT.S;
         final String CURRENCY_SPOT_PRICE = CALCULATOR_INPUT.S;

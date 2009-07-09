@@ -144,6 +144,33 @@ public class OPCInputPane extends JPanel {
         add(fieldPane, BorderLayout.LINE_END);
     }
 
+    public JPanel getLabelPane()
+    {
+        return labelPane;
+    }
+
+    public JPanel getFieldPane()
+    {
+        return fieldPane;
+    }
+
+    public void reconstructInputPane( OPCInputPane sample )
+    {
+        JPanel newLabelPane = sample.getLabelPane();
+        JPanel newFieldPane = sample.getFieldPane();
+
+        this.removeAll();
+        this.add( newLabelPane, BorderLayout.CENTER );
+        this.add( newFieldPane, BorderLayout.LINE_END );
+        this.validate();
+    }
+
+    public void disableTimeToMaturity()
+    {
+        this.timeToMaturityField.setEditable( false );
+        this.timeToMaturityField.setText( "N.A." );
+    }
+    
     public void addInputComponent( JLabel label, JComponent component, int inputType, int offset )
     {
         int index = 0;

@@ -7,6 +7,7 @@ package opc.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+
 
 import opc.calculator.OptionsCalculatorInterface;
 
@@ -33,6 +37,7 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     protected OPCOutputPane outputPanel;      // output panel for numerical outputs
     protected JComponent leftPanel;           // leftPanel = inputPanel + outputPanel
     protected JComponent rightPanel;          // graph panel for Option Value graph view
+    protected JComponent btnPanel;
     protected JComponent mainPanel;           // the first tab, which combines leftPanel and rightPanel
 
     protected JButton calculateBtn;           // the button to trigger calculation
@@ -90,12 +95,18 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         rightPanel = new JPanel();
         inputPanel = new OPCInputPane();
         outputPanel = new OPCOutputPane();
-        JPanel btnPanel = new JPanel();
+        btnPanel = new JPanel();
         btnPanel.add( calculateBtn );
-        leftPanel.setLayout( new BorderLayout() );
+        /*leftPanel.setLayout( new BorderLayout() );
         leftPanel.add( inputPanel, BorderLayout.NORTH );
         leftPanel.add( btnPanel, BorderLayout.CENTER );
-        leftPanel.add( outputPanel, BorderLayout.SOUTH );
+        leftPanel.add( outputPanel, BorderLayout.SOUTH );*/
+        leftPanel.setLayout( new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS) );
+        leftPanel.add( inputPanel );
+        leftPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        leftPanel.add( btnPanel );
+        leftPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        leftPanel.add( outputPanel );
         
         rightPanel = makeTextPanel( "To be implemented" );
 
@@ -150,6 +161,7 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     
     public void actionPerformed( ActionEvent e )
     {
+        // Handling calculate button event
         // Step 1: validate inputs TODO
         // Step 2: send inputs to backend calculator
         // Step 3: collect output from backend and refresh output panel
@@ -160,7 +172,7 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
             // TODO pop up a dialogue box to show error message
             return;
         }
-        
+
         OptionsCalculatorInterface calculator = getCalculatorInstance();
         if( calculator == null ) // class cast exception possibly 
         {
