@@ -13,9 +13,6 @@ import java.util.HashMap;
  */
 public class StockIndexOption extends PlainVanillaOption {
 
-    private double q;
-    private String qtype;
-
     public void sendInputs( HashMap<String,String> inputs )
     {
         super.sendInputs(inputs);
