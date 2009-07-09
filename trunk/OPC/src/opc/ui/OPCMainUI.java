@@ -40,7 +40,7 @@ public class OPCMainUI {
     final static String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC Calculator Class Map.config";
 
     public static HashMap<String, String> treeNodeNameCalculatorClassMap;
-    private static HashMap<String,String> treeNodeNameUIClassMap;
+    public static HashMap<String,String> treeNodeNameUIClassMap;
     private static JFrame mainFrame;
     private static JSplitPane splitPane;
     private static JTree optionModelTree;
@@ -148,6 +148,7 @@ public class OPCMainUI {
         mainFrame.add( splitPane, BorderLayout.CENTER );
         mainFrame.setDefaultLookAndFeelDecorated(true);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
+        mainFrame.setResizable( false );
         mainFrame.setVisible(true);
     }
 

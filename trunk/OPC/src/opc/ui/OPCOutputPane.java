@@ -183,20 +183,6 @@ public class OPCOutputPane extends JPanel {
         fieldPane.add( component );
     }
 
-    /*private final String OPTION_VALUE_STRING = "Option Value: ";
-    private final String DELTA_STRING = "Delta: ";
-    private final String ELASTICITY_STRING = "Elasticity: ";
-    private final String GAMMA_STRING = "Gamma: ";
-    private final String DGAMMA_DVOL_STRING = "dGammaDvol: ";
-    private final String GAMMAP_STRING = "GammaP: ";
-    private final String VEGA_STRING = "Vega: ";
-    private final String DVEGA_DVOL_STRING = "dVegaDvol: ";
-    private final String THETA_STRING = "Theta: ";
-    private final String RHO_STRING = "Rho: ";
-    private final String DDELTA_DVOL_STRING = "dDeltaDvol: ";
-    private final String SPEED_STRING = "Speed: ";
-    private final String DELTAX_STRING = "DeltaX: ";*/
-
     public void setOptionValue( String value )
     {
         optionValueField.setValue( value );
