@@ -50,6 +50,8 @@ public class OPCInputPane extends JPanel {
 
     private ButtonGroup longShortGroup;
     private ButtonGroup timeUnitGroup;
+    private JPanel longShortPane;
+    private JPanel timeUnitPane;
 
     private JRadioButton longButton;
     private JRadioButton shortButton;
@@ -86,10 +88,10 @@ public class OPCInputPane extends JPanel {
         longShortGroup.add( shortButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.LONG_SHORT.SHORT, false) );
         timeUnitGroup.add( yearsButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.TIME_UNIT.YEAR, true) );
         timeUnitGroup.add( daysButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.TIME_UNIT.DAY, false) );
-        JPanel longShortPane = new JPanel( new GridLayout(1,0) );
+        longShortPane = new JPanel( new GridLayout(1,0) );
         longShortPane.add( longButton );
         longShortPane.add( shortButton );
-        JPanel timeUnitPane = new JPanel( new GridLayout(1,0) );
+        timeUnitPane = new JPanel( new GridLayout(1,0) );
         timeUnitPane.add( yearsButton );
         timeUnitPane.add( daysButton );
         
@@ -165,10 +167,20 @@ public class OPCInputPane extends JPanel {
         this.validate();
     }
 
-    public void disableTimeToMaturity()
+    public void removeTimeToMaturity()
     {
-        this.timeToMaturityField.setEditable( false );
-        this.timeToMaturityField.setText( "N.A." );
+        labelPane.remove( timeToMaturityLabel );
+        labelPane.validate();
+        fieldPane.remove( timeToMaturityField );
+        fieldPane.validate();
+    }
+
+    public void removeTimeUnit()
+    {
+        labelPane.remove( timeUnitLabel );
+        labelPane.validate();
+        fieldPane.remove( timeUnitPane );
+        fieldPane.validate();
     }
     
     public void addInputComponent( JLabel label, JComponent component, int inputType, int offset )
