@@ -114,7 +114,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double ulPrice = price;
 
-        S = orignalS + DSCALER;
+        S = orignalS - DSCALER;
         sigma = orignalSigma + DPERCENTAGE;
         setPrice();
         double luPrice = price;
@@ -241,8 +241,6 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double upperPrice = price;
 
-        System.out.println(upperPrice);
-        System.out.println(sigma);
         sigma = orignalSigma - DPERCENTAGE;
         setPrice();
         double lowerPrice = price;
@@ -325,20 +323,23 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         double orignalT = T;
         double orignalPrice = price;
 
-        if (T <= 1/365)
+        double lowerPrice;
+
+        if (orignalT <= 1.0/365)
         {
             T = pow(10,-5);
-            double lowerPrice = price;
-            theta = lowerPrice - price;
+            setPrice();
+            lowerPrice = price;
         }
         else
         {
-            T = orignalT - 1/365;
+            T = orignalT - 1.0/365;
             setPrice();
-            double lowerPrice = price;
-            theta = -365 * eta * NumericalDifference.FirstOrderDifference(lowerPrice, orignalPrice, -1/365); ;
+            lowerPrice = price;
         }
 
+        theta = lowerPrice - orignalPrice;
+        
         T = orignalT;
         price = orignalPrice;
     }

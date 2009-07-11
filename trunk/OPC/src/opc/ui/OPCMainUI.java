@@ -32,8 +32,8 @@ import opc.util.OPCTreeNodeNameClassMapConstructor;
  */
 public class OPCMainUI {
 
-    final static int MAIN_FRAME_WIDTH = 1600;
-    final static int MAIN_FRAME_HEIGHT = 900;
+    final static int MAIN_FRAME_WIDTH = 1500;
+    final static int MAIN_FRAME_HEIGHT = 800;
     final static String MAIN_UI_TITLE = "Options Pricing Calculator";
     final static String TREE_ROOT_NAME = "Options Model Types";
     final static String UI_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC UI Class Map.config";
@@ -148,7 +148,7 @@ public class OPCMainUI {
         mainFrame.add( splitPane, BorderLayout.CENTER );
         mainFrame.setDefaultLookAndFeelDecorated(true);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
-        mainFrame.setResizable( false );
+        //mainFrame.setResizable( false );
         mainFrame.setVisible(true);
     }
 
