@@ -94,13 +94,16 @@ public interface OptionsCalculatorInterface {
         final String GAMMA = "gamma";
         final String D_GAMMA_DVOL = "dGammaDvol";
         final String GAMMA_P = "gammaP";
+        final String GAMMA_X = "gammaX";
         final String VEGA = "vega";
         final String D_VEGA_DVOL = "dVegaDvol";
         final String VEGA_P = "vegaP";
         final String SPEED = "speed";
         final String THETA = "theta";
         final String RHO = "rho";
+        final String FUTURESRHO = "futuresRho";
         final String CARRY = "carry";
+        final String RISKNEUTRALDENSITY = "riskNeutralDensity";
     }
 
     // calculate options values and sensitivities

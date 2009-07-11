@@ -33,7 +33,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
     protected double theta = 0.0;
     protected double speed = 0.0;
     protected double rho = 0.0;
-    protected double futuresrho = 0.0;
+    protected double futuresRho = 0.0;
     protected double elasticity = 0.0;
     protected double carry = 0.0;
     protected double dDeltaDvol = 0.0;
@@ -41,6 +41,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
     protected double dVegaDvol = 0.0;
     protected double deltaX = 0.0;
     protected double gammaX = 0.0;
+    protected double riskNeutralDensity = 0.0;
 
     protected final static double DSCALER = 0.01;
     protected final static double DPERCENTAGE = 0.01;
@@ -121,7 +122,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double llPrice = price;
 
-        dDeltaDvol = eta * NumericalDifference.SecondOrderMixedDifference(uuPrice, ulPrice, luPrice, llPrice,
+        dDeltaDvol = 0.01 * eta * NumericalDifference.SecondOrderMixedDifference(uuPrice, ulPrice, luPrice, llPrice,
                                                                          DSCALER, DPERCENTAGE);
         S = orignalS;
         sigma = orignalSigma;
@@ -152,7 +153,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         gammaP = gamma * S / 100;
     }
 
-    public void GammaX()
+    public void setGammaX()
     {
         double orignalX = X;
         double orignalPrice = price;
@@ -173,12 +174,62 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
 
     public void setDGammaDvol()
     {
+        double orignalS = S;
+        double orignalSigma = sigma;
+        double orignalPrice = price;
 
+        S = orignalS;
+        sigma = orignalSigma + DPERCENTAGE;
+        setPrice();
+        double muPrice = price;
+        sigma = orignalSigma - DPERCENTAGE;
+        setPrice();
+        double mlPrice = price;
+
+        S = orignalS + DSCALER;
+        sigma = orignalSigma + DPERCENTAGE;
+        setPrice();
+        double uuPrice = price;
+        sigma = orignalSigma - DPERCENTAGE;
+        setPrice();
+        double ulPrice = price;
+
+        S = orignalS - DSCALER;
+        sigma = orignalSigma + DPERCENTAGE;
+        setPrice();
+        double luPrice = price;
+        sigma = orignalSigma - DPERCENTAGE;
+        setPrice();
+        double llPrice = price;
+
+        dGammaDvol = 0.01* eta * NumericalDifference.ThirdOrderMixedDifference(uuPrice, muPrice, luPrice,
+                                                           ulPrice, mlPrice, llPrice, DSCALER, DPERCENTAGE);
+        S = orignalS;
+        sigma = orignalSigma;
+        price = orignalPrice;
     }
 
     public void setSpeed()
     {
+        double orignalS = S;
+        double orignalPrice = price;
 
+        S = orignalS + 2*DSCALER;
+        setPrice();
+        double uuPrice = price;
+
+        S = orignalS + DSCALER;
+        setPrice();
+        double uPrice = price;
+
+        S = orignalS - DSCALER;
+        setPrice();
+        double lPrice = price;
+
+        speed = eta * NumericalDifference.ThirdOrderDifference(uuPrice, uPrice, orignalPrice, lPrice, DSCALER);
+
+        S = orignalS;
+        price = orignalPrice;
     }
 
     public void setVega()
@@ -195,10 +246,6 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         sigma = orignalSigma - DPERCENTAGE;
         setPrice();
         double lowerPrice = price;
-
-        System.out.println(lowerPrice);
-        System.out.println(sigma);
-        System.out.println(eta);
         
         vega = 0.01 * eta * NumericalDifference.FirstOrderDifference(upperPrice, lowerPrice, DPERCENTAGE);
 
@@ -213,7 +260,21 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
 
     public void setDVegaDvol()
     {
+        double orignalSigma = sigma;
+        double orignalPrice = price;
 
+        sigma = orignalSigma + DPERCENTAGE;
+        setPrice();
+        double upperPrice = price;
+
+        sigma = orignalSigma - DPERCENTAGE;
+        setPrice();
+        double lowerPrice = price;
+
+        dVegaDvol = 0.0001 * eta * NumericalDifference.SecondOrderDifference(upperPrice, orignalPrice, lowerPrice, DPERCENTAGE);
+
+        sigma = orignalSigma;
+        price = orignalPrice;
     }
 
 
@@ -253,7 +314,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double lowerPrice = price;
 
-        futuresrho = 0.01 * eta * NumericalDifference.SecondOrderDifference(upperPrice, orignalPrice, lowerPrice, DPERCENTAGE);
+        futuresRho = 0.01 * eta * NumericalDifference.SecondOrderDifference(upperPrice, orignalPrice, lowerPrice, DPERCENTAGE);
 
         r = orignalr;
         price = orignalPrice;
@@ -261,7 +322,25 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
 
     public void setTheta()
     {
+        double orignalT = T;
+        double orignalPrice = price;
 
+        if (T <= 1/365)
+        {
+            T = pow(10,-5);
+            double lowerPrice = price;
+            theta = lowerPrice - price;
+        }
+        else
+        {
+            T = orignalT - 1/365;
+            setPrice();
+            double lowerPrice = price;
+            theta = -365 * eta * NumericalDifference.FirstOrderDifference(lowerPrice, orignalPrice, -1/365); ;
+        }
+
+        T = orignalT;
+        price = orignalPrice;
     }
     
     public void setElasticity()
