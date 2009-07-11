@@ -38,7 +38,6 @@ public class AmericanOption extends AbstractOptionsCalculator{
 
     public void setPrice()
     {
-        System.out.println( "T = " + T );
         longOrShort();
         
         if (optionflag.equals(CALL_PUT.PUT))
@@ -168,7 +167,8 @@ public class AmericanOption extends AbstractOptionsCalculator{
     {
         longOrShort();
         callOrPut();
-
+        dvalues();
+        
         double Nd1 = NormOneDim.cdf(d1);
         double Nd2 = NormOneDim.cdf(d2);
 
@@ -235,6 +235,7 @@ public class AmericanOption extends AbstractOptionsCalculator{
         this.positionflag = inputs.get(CALCULATOR_INPUT.POSITION_FLAG);
         this.optionflag = inputs.get(CALCULATOR_INPUT.OPTION_FLAG);
         this.r = Adjustment.getContinuousRate(r, rtype);
+        this.T = Adjustment.getAnnualTime(T, timeconvention);
         this.optiontype = inputs.get(CALCULATOR_INPUT.OPTION_TYPE);
 
         if (optiontype.equals(OPTION_TYPE.STOCK_OPTION))
