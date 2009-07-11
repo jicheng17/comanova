@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
 import opc.calculator.OptionsCalculatorInterface;
@@ -40,6 +41,8 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
     private ButtonGroup callPutGroup;
     private JComboBox foreignRiskCompoundingComboBox;
 
+    private JComponent riskNeutralDensityGraphTab;
+
     public CurrencyOptionsTabbedPane()
     {
         super();
@@ -53,14 +56,14 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
         callPutLabel = new JLabel( CALL_PUT_STRING );
         foreignRiskFreeRateLabel = new JLabel( FOREIGN_RISK_FREE_RATE_STRING );
         foreignRiskCompoundingLabel = new JLabel( FOREIGN_RISK_COMPOUNDING_STRING );
-        
-        currencySpotPriceField = UIComponentCreator.createTextField();
+
+        currencySpotPriceField = UIComponentCreator.createTextField( true );
         currencySpotPriceLabel.setLabelFor( currencySpotPriceField );
         
-        foreignRiskFreeRateField = UIComponentCreator.createTextField();
+        foreignRiskFreeRateField = UIComponentCreator.createTextField( true );
         foreignRiskFreeRateLabel.setLabelFor( foreignRiskFreeRateField );
         foreignRiskCompoundingComboBox = UIComponentCreator.createCompoundingComboBox();
-        
+
         callPutGroup = new ButtonGroup();
         callPutGroup.add( callButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.CALL_PUT.CALL, true) );
         callPutGroup.add( putButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.CALL_PUT.PUT, false) );
@@ -73,6 +76,11 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
         inputPanel.addInputComponent( foreignRiskCompoundingLabel, foreignRiskCompoundingComboBox, 
                 OPCInputPane.INPUT_TYPE.COMBO_BOX, 1 );
+
+        outputPanel.addRiskNeutralDensity();
+
+        riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
+        this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
     }
     
     public HashMap<String,String> constructInputMap()

@@ -53,6 +53,8 @@ public class AmericanOptionsTabbedPane extends OPCTabbedPane {
         tabbedPane.initComponent();
         tabbedPane.inputPanel.addInputComponent( optionTypeLabel, optionTypeComboBox, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
         inputPanel.reconstructInputPane( tabbedPane.inputPanel );
+
+        outputPanel.addEuropeanOptionValue();
     }
 
     public void actionPerformed( ActionEvent e )
@@ -98,6 +100,8 @@ public class AmericanOptionsTabbedPane extends OPCTabbedPane {
     public void refreshOutput( HashMap<String,String> outputMap )
     {
         super.refreshOutput( outputMap );
+
+        outputPanel.setEuropeanOptionValue( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.EUROPEAN_OPTION_VALUE) );
         // update additional outputs for this particular option type
     }
 }

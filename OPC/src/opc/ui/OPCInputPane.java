@@ -105,10 +105,10 @@ public class OPCInputPane extends JPanel {
         riskFreeCompoundingLabel = new JLabel( RISK_FREE_COMPOUNDING_STRING );
 
         // init text fields
-        strikePriceField = UIComponentCreator.createTextField();
-        timeToMaturityField = UIComponentCreator.createTextField();
-        riskFreeRateField = UIComponentCreator.createTextField();
-        volatilityField = UIComponentCreator.createTextField();
+        strikePriceField = UIComponentCreator.createTextField( true );
+        timeToMaturityField = UIComponentCreator.createTextField( true );
+        riskFreeRateField = UIComponentCreator.createTextField( true );
+        volatilityField = UIComponentCreator.createTextField( true );
 
         // bond labels to text fields
         strikePriceLabel.setLabelFor( strikePriceField );
@@ -211,7 +211,9 @@ public class OPCInputPane extends JPanel {
 
         label.setLabelFor( component );
         labelPane.add( label, index );
+        labelPane.validate();
         fieldPane.add( component, index );
+        fieldPane.validate();
     }
 
     public String getStrikePrice()

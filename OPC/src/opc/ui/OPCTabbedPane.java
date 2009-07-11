@@ -44,36 +44,45 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
 
     //private JComponent valueGraphTab;       // the tab for optionValue graph view
     protected JComponent deltaGraphTab;       // the tab for delta graph view
-    protected JComponent elasticityGraphTab;  // the tab for elasticity graph view
-    protected JComponent gammaGraphTab;       // the tab for gamma graph view
-    protected JComponent dGamaDvolGraphTab;   // the tab for dGammaDvol graph view
-    protected JComponent gammaPGraphTab;      // the tab for gammaP graph view
-    protected JComponent vegaGraphTab;        // the tab for vega graph view
-    protected JComponent dVegalDvolGraphTab;  // the tab for dVegalDvol graph view
-    protected JComponent thetaGraphTab;       // the tab for theta graph view
-    protected JComponent rhoGraphTab;         // the tab for rho graph view
-    protected JComponent dDeltaDvolGraphTab;  // the tab for dDeltaDvol graph view
-    protected JComponent speedGraphTab;       // the tab for speed graph view
     protected JComponent deltaXGraphTab;      // the tab for deltaX graph view
+    protected JComponent dDeltaDvolGraphTab;  // the tab for dDeltaDvol graph view
+    protected JComponent gammaGraphTab;       // the tab for gamma graph view
+    protected JComponent gammaXGraphTab;      // the tab for gammaX graph view
+    protected JComponent gammaPGraphTab;      // the tab for gammaP graph view
+    protected JComponent dGamaDvolGraphTab;   // the tab for dGammaDvol graph view
+    protected JComponent vegaGraphTab;        // the tab for vega graph view
+    protected JComponent vegaPGraphTab;       // the tab for vegaP graph view
+    protected JComponent dVegalDvolGraphTab;  // the tab for dVegalDvol graph view
+    protected JComponent rhoGraphTab;         // the tab for rho graph view
+    protected JComponent futuresRhoGraphTab;  // the tab for futuresRho graph view
+    protected JComponent elasticityGraphTab;  // the tab for elasticity graph view
+    protected JComponent thetaGraphTab;       // the tab for theta graph view
+    protected JComponent speedGraphTab;       // the tab for speed graph view
+    protected JComponent carryGraphTab;       // the tab for carry graph view
+    
 
     protected String mainPanelTitle;
 
     //private final String VALUE_TAB_TITLE = "Option Value";
     protected final String CALCULATE_BUTTON_LABEL = "Calculate";
     protected final String DELTA_TAB_TITLE = "Delta";
-    protected final String ELASTICITY_TAB_TITLE = "Elasticity";
-    protected final String GAMMA_TAB_TITLE = "Gamma";
-    protected final String DGAMMA_DVOL_TAB_TITLE = "dGammaDvol";
-    protected final String GAMMAP_TAB_TITLE = "GammaP";
-    protected final String VEGA_TAB_TITLE = "Vega";
-    protected final String DVEGA_DVOL_TAB_TITLE = "dVegaDvol";
-    protected final String THETA_TAB_TITLE = "Theta";
-    protected final String RHO_TAB_TITLE = "Rho";
-    protected final String DDELTA_DVOL_TAB_TITLE = "dDeltaDvol";
-    protected final String SPEED_TAB_TITLE = "Speed";
     protected final String DELTAX_TAB_TITLE = "DeltaX";
-
-
+    protected final String DDELTA_DVOL_TAB_TITLE = "dDeltaDvol";
+    protected final String GAMMA_TAB_TITLE = "Gamma";
+    protected final String GAMMAX_TAB_TITLE = "GammaX";
+    protected final String GAMMAP_TAB_TITLE = "GammaP";
+    protected final String DGAMMA_DVOL_TAB_TITLE = "dGammaDvol";
+    protected final String VEGA_TAB_TITLE = "Vega";
+    protected final String VEGAP_TAB_TITLE = "VegaP";
+    protected final String DVEGA_DVOL_TAB_TITLE = "dVegaDvol";
+    protected final String RHO_TAB_TITLE = "Rho";
+    protected final String FUTURES_RHO_TAB_TITLE = "FuturesRho";
+    protected final String ELASTICITY_TAB_TITLE = "Elasticity";
+    protected final String THETA_TAB_TITLE = "Theta";
+    protected final String SPEED_TAB_TITLE = "Speed";
+    protected final String CARRY_TAB_TITLE = "Carry";
+    protected final String RISK_NEUTRAL_DENSITY_TITLE = "Risk Neutral Density";
+    
     public OPCTabbedPane()
     {
         super();
@@ -97,16 +106,18 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         outputPanel = new OPCOutputPane();
         btnPanel = new JPanel();
         btnPanel.add( calculateBtn );
-        /*leftPanel.setLayout( new BorderLayout() );
-        leftPanel.add( inputPanel, BorderLayout.NORTH );
-        leftPanel.add( btnPanel, BorderLayout.CENTER );
-        leftPanel.add( outputPanel, BorderLayout.SOUTH );*/
-        leftPanel.setLayout( new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS) );
-        leftPanel.add( inputPanel );
-        leftPanel.add(Box.createRigidArea(new Dimension(0,5)));
-        leftPanel.add( btnPanel );
-        leftPanel.add(Box.createRigidArea(new Dimension(0,5)));
-        leftPanel.add( outputPanel );
+        
+        JPanel tempPanel = new JPanel();
+        tempPanel.setLayout( new BoxLayout(tempPanel, BoxLayout.PAGE_AXIS) );
+        tempPanel.add( inputPanel );
+        tempPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        tempPanel.add( btnPanel );
+        tempPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        tempPanel.add( outputPanel );
+
+        leftPanel.setLayout( new BorderLayout() );
+        leftPanel.add( tempPanel, BorderLayout.NORTH );
+        leftPanel.add( new JPanel(), BorderLayout.CENTER );
         
         rightPanel = makeTextPanel( "To be implemented" );
 
@@ -116,32 +127,40 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         mainPanel.add( rightPanel, BorderLayout.EAST );
 
         deltaGraphTab = makeTextPanel( "To be implemented" );
-        elasticityGraphTab = makeTextPanel( "To be implemented" );
-        gammaGraphTab = makeTextPanel( "To be implemented" );
-        dGamaDvolGraphTab = makeTextPanel( "To be implemented" );
-        gammaPGraphTab = makeTextPanel( "To be implemented" );
-        vegaGraphTab = makeTextPanel( "To be implemented" );
-        dVegalDvolGraphTab = makeTextPanel( "To be implemented" );
-        thetaGraphTab = makeTextPanel( "To be implemented" );
-        rhoGraphTab = makeTextPanel( "To be implemented" );
-        dDeltaDvolGraphTab = makeTextPanel( "To be implemented" );
-        speedGraphTab = makeTextPanel( "To be implemented" );
         deltaXGraphTab = makeTextPanel( "To be implemented" );
-
+        dDeltaDvolGraphTab = makeTextPanel( "To be implemented" );
+        gammaGraphTab = makeTextPanel( "To be implemented" );
+        gammaXGraphTab = makeTextPanel( "To be implemented" );
+        gammaPGraphTab = makeTextPanel( "To be implemented" );
+        dGamaDvolGraphTab = makeTextPanel( "To be implemented" );
+        vegaGraphTab = makeTextPanel( "To be implemented" );
+        vegaPGraphTab = makeTextPanel( "To be implemented" );
+        dVegalDvolGraphTab = makeTextPanel( "To be implemented" );
+        rhoGraphTab = makeTextPanel( "To be implemented" );
+        futuresRhoGraphTab = makeTextPanel( "To be implemented" );
+        elasticityGraphTab = makeTextPanel( "To be implemented" );
+        thetaGraphTab = makeTextPanel( "To be implemented" );
+        speedGraphTab = makeTextPanel( "To be implemented" );
+        carryGraphTab = makeTextPanel( "To be implemented" );
+        
         this.addTab( mainPanelTitle, null, mainPanel, "Main Panel" );
         this.addTab( DELTA_TAB_TITLE, null, deltaGraphTab, "Delta Graph Panel");
-        this.addTab( ELASTICITY_TAB_TITLE, null, elasticityGraphTab, "Elasticity Graph Panel");
-        this.addTab( GAMMA_TAB_TITLE, null, gammaGraphTab, "Gamma Graph Panel" );
-        this.addTab( DGAMMA_DVOL_TAB_TITLE, null, dGamaDvolGraphTab, "dGammaDvol Graph Panel" );
-        this.addTab( GAMMAP_TAB_TITLE, null, gammaPGraphTab, "GammaP Graph Panel" );
-        this.addTab( VEGA_TAB_TITLE, null, vegaGraphTab, "Vega Graph Panel" );
-        this.addTab( DVEGA_DVOL_TAB_TITLE, null, dVegalDvolGraphTab, "dVegaDvol Graph Panel" );
-        this.addTab( THETA_TAB_TITLE, null, thetaGraphTab, "Theta Graph Panel" );
-        this.addTab( RHO_TAB_TITLE, null, rhoGraphTab, "Rho Graph Panel" );
+        this.addTab( DELTAX_TAB_TITLE, null, deltaXGraphTab, "DeltaX Graph Panel");
         this.addTab( DDELTA_DVOL_TAB_TITLE, null, dDeltaDvolGraphTab, "dDeltaDvol Graph Panel" );
+        this.addTab( GAMMA_TAB_TITLE, null, gammaGraphTab, "Gamma Graph Panel" );
+        this.addTab( GAMMAX_TAB_TITLE, null, gammaXGraphTab, "GammaX Graph Panel" );
+        this.addTab( GAMMAP_TAB_TITLE, null, gammaPGraphTab, "GammaP Graph Panel" );
+        this.addTab( DGAMMA_DVOL_TAB_TITLE, null, dGamaDvolGraphTab, "dGammaDvol Graph Panel" );
+        this.addTab( VEGA_TAB_TITLE, null, vegaGraphTab, "Vega Graph Panel" );
+        this.addTab( VEGAP_TAB_TITLE, null, vegaPGraphTab, "VegaP Graph Panel" );
+        this.addTab( DVEGA_DVOL_TAB_TITLE, null, dVegalDvolGraphTab, "dVegaDvol Graph Panel" );
+        this.addTab( RHO_TAB_TITLE, null, rhoGraphTab, "Rho Graph Panel" );
+        this.addTab( FUTURES_RHO_TAB_TITLE, null, futuresRhoGraphTab, "FuturesRho Graph Panel" );
+        this.addTab( ELASTICITY_TAB_TITLE, null, elasticityGraphTab, "Elasticity Graph Panel");
+        this.addTab( THETA_TAB_TITLE, null, thetaGraphTab, "Theta Graph Panel" );
         this.addTab( SPEED_TAB_TITLE, null, speedGraphTab, "Speed Graph Panel" );
-        this.addTab( DELTAX_TAB_TITLE, null, deltaXGraphTab, "DeltaX Graph Panel" );
-
+        this.addTab( CARRY_TAB_TITLE, null, carryGraphTab, "Carry Graph Panel" );
+        
         //this.setMnemonicAt(3, KeyEvent.VK_4);
     }
 
@@ -238,17 +257,20 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     {
         outputPanel.setOptionValue( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.OPTION_VALUE) );
         outputPanel.setDelta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) );
+        outputPanel.setDeltaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTAX) );
+        outputPanel.setDDeltaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_DELTA_DVOL) );
         outputPanel.setGamma( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) );
         outputPanel.setVega( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) );
+        outputPanel.setGammaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_X) );
         outputPanel.setGammaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) );
-        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) );
-        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) );
-        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
-        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
-        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
-        outputPanel.setDDeltaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_DELTA_DVOL) );
         outputPanel.setDGammaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_GAMMA_DVOL) );
+        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) );
         outputPanel.setDVegaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_VEGA_DVOL) );
-        outputPanel.setDeltaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTAX) );
+        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
+        outputPanel.setFuturesRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.FUTURESRHO) );
+        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
+        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) );
+        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
+        outputPanel.setCarry( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.CARRY) );
     }
 }
