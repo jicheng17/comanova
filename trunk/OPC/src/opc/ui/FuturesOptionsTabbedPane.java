@@ -12,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
 import opc.calculator.OptionsCalculatorInterface;
@@ -33,6 +34,8 @@ public class FuturesOptionsTabbedPane extends OPCTabbedPane {
     private JRadioButton putButton;
     private ButtonGroup callPutGroup;
 
+    private JComponent riskNeutralDensityGraphTab;
+
     public FuturesOptionsTabbedPane()
     {
         super();
@@ -44,7 +47,7 @@ public class FuturesOptionsTabbedPane extends OPCTabbedPane {
 
         futuresPriceLabel = new JLabel( FUTURES_PRICE_STRING );
         callPutLabel = new JLabel( CALL_PUT_STRING );
-        futuresPriceField = UIComponentCreator.createTextField();
+        futuresPriceField = UIComponentCreator.createTextField( true );
         futuresPriceLabel.setLabelFor( futuresPriceField );
         callPutGroup = new ButtonGroup();
         callPutGroup.add( callButton=UIComponentCreator.createRadioButton(OptionsCalculatorInterface.CALL_PUT.CALL, true) );
@@ -55,6 +58,11 @@ public class FuturesOptionsTabbedPane extends OPCTabbedPane {
 
         inputPanel.addInputComponent( futuresPriceLabel, futuresPriceField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 0 );
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
+
+        outputPanel.addRiskNeutralDensity();
+
+        riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
+        this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
     }
     
     public HashMap<String,String> constructInputMap()

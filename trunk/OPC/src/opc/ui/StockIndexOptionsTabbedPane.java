@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
 import opc.calculator.OptionsCalculatorInterface;
@@ -40,6 +41,8 @@ public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
     private ButtonGroup callPutGroup;
     private JComboBox dividendCompoundingComboBox;
 
+    private JComponent riskNeutralDensityGraphTab;
+
     public StockIndexOptionsTabbedPane()
     {
         super();
@@ -54,10 +57,10 @@ public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
         dividendYieldLabel = new JLabel( DIVIDEND_YIELD_STRING );
         dividendCompoundingLabel = new JLabel( DIVIDEND_COMPOUNDING_STRING );
         
-        stockIndexPriceField = UIComponentCreator.createTextField();
+        stockIndexPriceField = UIComponentCreator.createTextField( true );
         stockIndexPriceLabel.setLabelFor( stockIndexPriceField );
         
-        dividendYieldField = UIComponentCreator.createTextField();
+        dividendYieldField = UIComponentCreator.createTextField( true );
         dividendYieldLabel.setLabelFor( dividendYieldField );
         dividendCompoundingComboBox = UIComponentCreator.createCompoundingComboBox();
         
@@ -73,6 +76,12 @@ public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
         inputPanel.addInputComponent( dividendCompoundingLabel, dividendCompoundingComboBox, 
                 OPCInputPane.INPUT_TYPE.COMBO_BOX, 1 );
+
+        outputPanel.addRiskNeutralDensity();
+
+        riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
+        this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
+
     }
     
     public HashMap<String,String> constructInputMap()

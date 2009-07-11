@@ -86,6 +86,7 @@ public interface OptionsCalculatorInterface {
     {
         // TODO: any additional GUI output from calculator will be added here
         final String OPTION_VALUE = "price";
+        final String EUROPEAN_OPTION_VALUE = "e_price";
         final String DELTA = "delta";
         final String DELTAX = "deltaX";
         final String GAMMAX = "gammaX";

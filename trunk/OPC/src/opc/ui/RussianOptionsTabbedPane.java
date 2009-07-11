@@ -55,6 +55,8 @@ public class RussianOptionsTabbedPane extends OPCTabbedPane {
         tabbedPane.inputPanel.removeTimeToMaturity();
         tabbedPane.inputPanel.removeTimeUnit();
         inputPanel.reconstructInputPane( tabbedPane.inputPanel );
+
+        outputPanel.removeTheta();
     }
 
     public void actionPerformed( ActionEvent e )

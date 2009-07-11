@@ -18,12 +18,12 @@ public class UIComponentCreator {
           OptionsCalculatorInterface.OPTION_TYPE.CURRENCY_OPTION,
           OptionsCalculatorInterface.OPTION_TYPE.FUTURES_OPTION };
     
-    public static JFormattedTextField createTextField()
+    public static JFormattedTextField createTextField( boolean editable )
     {
         JFormattedTextField field = new JFormattedTextField();
         field.setValue( INPUT_FIELD_DEFAULT_VALUE );
         field.setColumns( INPUT_FIELD_SIZE );
-
+        field.setEditable( editable );
         return field;
     }
     
