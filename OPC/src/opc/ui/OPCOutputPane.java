@@ -225,7 +225,7 @@ public class OPCOutputPane extends JPanel {
         europeanOptionValueLabel.setLabelFor( europeanOptionValueField );
         labelPane.add( europeanOptionValueLabel, 1 );
         labelPane.validate();
-        fieldPane.add( europeanOptionValueField );
+        fieldPane.add( europeanOptionValueField, 1 );
         fieldPane.validate();
     }
 

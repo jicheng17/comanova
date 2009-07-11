@@ -30,7 +30,7 @@ public class NumericalDifference {
     public static double SecondOrderMixedDifference(double z11, double z1_1, double z_11, double z_1_1,
                                                         double a, double b)
     {
-        return (z_11 - z1_1 - z_11 + z_1_1) / (4 * a * b);
+        return (z11 - z1_1 - z_11 + z_1_1) / (4 * a * b);
     }
 
     public static double ThirdOrderMixedDifference(double z11, double z01, double z_11, double z1_1,

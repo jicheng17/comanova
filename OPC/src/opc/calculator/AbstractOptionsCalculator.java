@@ -122,8 +122,9 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double llPrice = price;
 
-        dDeltaDvol = 0.01 * eta * NumericalDifference.SecondOrderMixedDifference(uuPrice, ulPrice, luPrice, llPrice,
-                                                                         DSCALER, DPERCENTAGE);
+        dDeltaDvol = 0.01 * eta * NumericalDifference.SecondOrderMixedDifference(uuPrice, ulPrice, 
+                                                           luPrice, llPrice, DSCALER, DPERCENTAGE);
+
         S = orignalS;
         sigma = orignalSigma;
         price = orignalPrice;
@@ -312,7 +313,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double lowerPrice = price;
 
-        futuresRho = 0.01 * eta * NumericalDifference.SecondOrderDifference(upperPrice, orignalPrice, lowerPrice, DPERCENTAGE);
+        futuresRho = 0.01 * eta * NumericalDifference.FirstOrderDifference(upperPrice, lowerPrice, DPERCENTAGE);
 
         r = orignalr;
         price = orignalPrice;
@@ -338,7 +339,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
             lowerPrice = price;
         }
 
-        theta = lowerPrice - orignalPrice;
+        theta = orignalPrice - lowerPrice;
         
         T = orignalT;
         price = orignalPrice;
@@ -362,7 +363,7 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
         setPrice();
         double lowerPrice = price;
 
-        carry = 0.01 * eta * NumericalDifference.SecondOrderDifference(upperPrice, orignalPrice, lowerPrice, DPERCENTAGE);
+        carry = 0.01 * eta * NumericalDifference.FirstOrderDifference(upperPrice, lowerPrice, DPERCENTAGE);
 
         b = orignalb;
         price = orignalPrice;
