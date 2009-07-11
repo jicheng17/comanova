@@ -6,7 +6,7 @@
 package opc.calculator;
 
 import java.util.HashMap;
-
+import opc.mathalgo.Adjustment;
 /**
  *
  * @author user
@@ -18,6 +18,7 @@ public class StockIndexOption extends PlainVanillaOption {
         super.sendInputs(inputs);
         q = Double.parseDouble(inputs.get(CALCULATOR_INPUT.Q) );
         qtype = inputs.get(CALCULATOR_INPUT.Q_TYPE);
+        this.q = Adjustment.getContinuousRate(q, qtype);
         b = r - q;
     }
 }

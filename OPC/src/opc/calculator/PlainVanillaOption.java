@@ -189,8 +189,8 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
 
     private void dvalues()
     {
-        d1 = (log(S/X)+(b+0.5*sigma*sigma)*T)/(sigma*sqrt(T));
-        d2 = (log(S/X)+(b-0.5*sigma*sigma)*T)/(sigma*sqrt(T));
+        d1 = (log(S / X) + (b + 0.5 * sigma * sigma) * T) / (sigma * sqrt(T));
+        d2 = (log(S / X) + (b - 0.5 * sigma * sigma) * T) / (sigma * sqrt(T));
     }
 
     public double[][] getPlotArray()

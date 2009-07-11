@@ -47,7 +47,7 @@ public class RussianOption extends AbstractOptionsCalculator{
             }
             else
             {
-            price = X/(a1-1)*pow((a1-1)/a1*(S/X),a1);
+                price = X/(a1-1)*pow((a1-1)/a1*(S/X),a1);
             }
         }
         else if (optionflag.equals(CALL_PUT.PUT)){

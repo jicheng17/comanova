@@ -6,7 +6,7 @@
 package opc.calculator;
 
 import java.util.HashMap;
-
+import opc.mathalgo.Adjustment;
 /**
  *
  * @author user
@@ -18,6 +18,7 @@ public class CurrencyOption extends PlainVanillaOption {
         super.sendInputs(inputs);
         rf = Double.parseDouble(inputs.get(CALCULATOR_INPUT.RF) );
         rftype = inputs.get(CALCULATOR_INPUT.RF_TYPE);
+        this.rf = Adjustment.getContinuousRate(rf, rftype);
         b = r - rf;
     }
 }

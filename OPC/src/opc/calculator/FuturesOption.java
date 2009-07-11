@@ -9,6 +9,12 @@ package opc.calculator;
  *
  * @author user
  */
-public class FuturesOption extends PlainVanillaOption {
+import java.util.HashMap;
 
+public class FuturesOption extends PlainVanillaOption {
+    public void sendInputs( HashMap<String,String> inputs )
+    {
+        super.sendInputs(inputs);
+        b = 0;
+    }
 }
