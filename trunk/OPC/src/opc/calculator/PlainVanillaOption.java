@@ -181,6 +181,12 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         carry = carry / 100;
     }
 
+    public void setRiskNeutralDensity()
+    {
+        double phid2 = NormOneDim.pdf(d2);
+        riskNeutralDensity = eta * phid2 * exp(-r*T) / (X * sigma * sqrt(T));
+    }
+
     private void dvalues()
     {
         d1 = (log(S/X)+(b+0.5*sigma*sigma)*T)/(sigma*sqrt(T));
@@ -236,6 +242,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         setElasticity();
         setCarry();
         setSpeed();
+        setRiskNeutralDensity();
     }
 
     // send inputs from GUI to corresponding back-end calculators
@@ -273,6 +280,7 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         outputMap.put( GUI_OUTPUT.THETA, df.format(theta) + "" );
         outputMap.put( GUI_OUTPUT.VEGA, df.format(vega) + "" );
         outputMap.put( GUI_OUTPUT.VEGA_P, df.format(vegaP) + "" );
+        outputMap.put( GUI_OUTPUT.RISKNEUTRALDENSITY, df.format(riskNeutralDensity) + "" );
 
         return outputMap;
     }
