@@ -7,6 +7,7 @@ package opc.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -97,6 +98,7 @@ public class OPCInputPane extends JPanel {
         
         // init labels
         longShortLabel = new JLabel( LONG_SHORT_STRING );
+        longShortLabel.setPreferredSize( new Dimension(5,5) );
         timeUnitLabel = new JLabel( TIME_UNIT_STRING );
         strikePriceLabel = new JLabel( STRIKE_PRICE_STRING );
         timeToMaturityLabel = new JLabel( TIME_TO_MATURITY_STRING );

@@ -22,7 +22,7 @@ import opc.util.UIComponentCreator;
  *
  * @author ZHAO QINGHUA
  */
-public class StockOptionsTabbedPane extends OPCTabbedPane {
+public class StockOptionPane extends OPCBasePane {
 
     private final String STOCK_PRICE_STRING = "Stock Price: ";
     private final String CALL_PUT_STRING = "Call/Put: ";
@@ -33,10 +33,8 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
     private JRadioButton callButton;
     private JRadioButton putButton;
     private ButtonGroup callPutGroup;
-
-    private JComponent riskNeutralDensityGraphTab;
     
-    public StockOptionsTabbedPane()
+    public StockOptionPane()
     {
         super();
     }
@@ -58,11 +56,6 @@ public class StockOptionsTabbedPane extends OPCTabbedPane {
 
         inputPanel.addInputComponent( stockPriceLabel, stockPriceField, OPCInputPane.INPUT_TYPE.TEXT_FIELD, 0 );
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
-
-        outputPanel.addRiskNeutralDensity();
-
-        riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
-        this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
     }
     
     public HashMap<String,String> constructInputMap()

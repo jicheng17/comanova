@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class VariablePurchaseOptionsTabbedPane extends OPCTabbedPane {
+public class ExecutiveOptionPane extends OPCBasePane {
 
 }

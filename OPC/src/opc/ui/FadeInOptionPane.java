@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class CashOrNothingOptionsTabbedPane extends OPCTabbedPane {
+public class FadeInOptionPane extends OPCBasePane {
 
 }

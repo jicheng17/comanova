@@ -11,10 +11,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.UIManager;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
@@ -32,23 +31,38 @@ import opc.util.OPCTreeNodeNameClassMapConstructor;
  */
 public class OPCMainUI {
 
-    final static int MAIN_FRAME_WIDTH = 1500;
-    final static int MAIN_FRAME_HEIGHT = 800;
-    final static String MAIN_UI_TITLE = "Options Pricing Calculator";
-    final static String TREE_ROOT_NAME = "Options Model Types";
-    final static String UI_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC UI Class Map.config";
-    final static String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC Calculator Class Map.config";
+    public static OPCMainUI mainUI;
+
+    final int MAIN_FRAME_WIDTH = 900;
+    final int MAIN_FRAME_HEIGHT = 500;
+    final String MAIN_UI_TITLE = "Options Pricing Calculator";
+    final String TREE_ROOT_NAME = "Options Model Types";
+    final String UI_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC UI Class Map.config";
+    final String CALCULATOR_CLASS_MAP_FILE_LOCATION = "C:\\conf\\OPC Calculator Class Map.config";
 
     public static HashMap<String, String> treeNodeNameCalculatorClassMap;
     public static HashMap<String,String> treeNodeNameUIClassMap;
-    private static JFrame mainFrame;
-    private static JSplitPane splitPane;
-    private static JTree optionModelTree;
-    private static JScrollPane treeView;
-    private static JPanel inputPanel;
-    private static JLabel inputLabel;
+    private JFrame mainFrame;
+    private JSplitPane splitPane;
+    private JTree optionModelTree;
+    private JScrollPane treeView;
+    private OPCMainTabbedPane rightPane;
 
-    private static void initComponents()
+    public OPCMainUI()
+    {
+    }
+
+    public final static synchronized OPCMainUI getInstance()
+    {
+        if( mainUI == null )
+        {
+            return mainUI = new OPCMainUI();
+        }
+
+        return mainUI;
+    }
+
+    private void initComponents()
     {
         treeNodeNameCalculatorClassMap = 
             OPCTreeNodeNameClassMapConstructor.getTreeNodeNameClassMap( CALCULATOR_CLASS_MAP_FILE_LOCATION );
@@ -68,12 +82,11 @@ public class OPCMainUI {
         treeView = new JScrollPane( optionModelTree );
         treeView.setBorder(BorderFactory.createTitledBorder("Types"));
 
-        // init input panel on the right
-        inputPanel = new JPanel();
-        inputLabel = new JLabel();
+        // init main tabbed pane on the right
+        rightPane = OPCMainTabbedPane.getInstance();
     }
     
-    private static void constructOptionModelTree()
+    private void constructOptionModelTree()
     {
         OPCTreeNode opcRoot = OPCTreeConstructor.constructTree();
         
@@ -88,7 +101,7 @@ public class OPCMainUI {
         optionModelTree.addMouseListener(ml);
     }
 
-    private static MouseListener getTreeMouseListener()
+    private MouseListener getTreeMouseListener()
     {
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -101,19 +114,20 @@ public class OPCMainUI {
                         {
                             String nodeName = (String)nodeSelected.getUserObject();
                             String nodeClass = treeNodeNameUIClassMap.get(nodeName);
-                            OPCTabbedPane rightPane = new OPCTabbedPane();
+                            OPCBasePane newPane = new OPCBasePane();
                             try
                             {
-                                Class<? extends OPCTabbedPane> tabbedPane = Class.forName(nodeClass).asSubclass(OPCTabbedPane.class);
-                                rightPane = tabbedPane.newInstance();
+                                Class<? extends OPCBasePane> tabbedPane = Class.forName(nodeClass).asSubclass(OPCBasePane.class);
+                                newPane = tabbedPane.newInstance();
                             }
                             catch (Exception cnfe )
                             {
                                 cnfe.printStackTrace();
                             }
-                            rightPane.setMainPanelTitle( nodeName );
-                            rightPane.display();
-                            splitPane.setRightComponent( rightPane );
+                            newPane.setMainPanelTitle( nodeName );
+                            newPane.display();
+                            rightPane.addTab( nodeName, newPane );
+                            rightPane.setSelectedComponent( newPane );
                         }
                     }
                 }
@@ -122,7 +136,7 @@ public class OPCMainUI {
         return ml;
     }
     
-    private static DefaultMutableTreeNode processHierarchy( OPCTreeNode root )
+    private DefaultMutableTreeNode processHierarchy( OPCTreeNode root )
     {
         DefaultMutableTreeNode result = new DefaultMutableTreeNode( root.getNodeName() );
         if( root.isLeaf() )
@@ -137,18 +151,27 @@ public class OPCMainUI {
         return result;
     }
 
-    public static void show()
+    public void show()
     {
         initComponents();
         
         splitPane.setOneTouchExpandable(true);
         splitPane.setLeftComponent(treeView);
-        inputPanel.add( inputLabel );
-        splitPane.setRightComponent(inputPanel);
+        splitPane.setRightComponent(rightPane);
         mainFrame.add( splitPane, BorderLayout.CENTER );
+        try
+        {
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            System.err.println( "error setting look and feel" + e );
+        }
         mainFrame.setDefaultLookAndFeelDecorated(true);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
-        //mainFrame.setResizable( false );
+        mainFrame.setResizable( false );
         mainFrame.setVisible(true);
     }
 
@@ -157,7 +180,8 @@ public class OPCMainUI {
      */
     public static void main(String[] args)
     {
-        OPCMainUI.show();
+        OPCMainUI mainUI = OPCMainUI.getInstance();
+        mainUI.show();
     }
 
 }

@@ -30,7 +30,7 @@ import opc.calculator.OptionsCalculatorInterface;
  *
  * @author ZHAO QINGHUA
  */
-public class OPCTabbedPane extends JTabbedPane implements ActionListener {
+public class OPCBasePane extends JPanel implements ActionListener {
 
 
     protected OPCInputPane inputPanel;        // input panel for user input
@@ -38,11 +38,11 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     protected JComponent leftPanel;           // leftPanel = inputPanel + outputPanel
     protected JComponent rightPanel;          // graph panel for Option Value graph view
     protected JComponent btnPanel;
-    protected JComponent mainPanel;           // the first tab, which combines leftPanel and rightPanel
+    //protected JComponent mainPanel;           // the first tab, which combines leftPanel and rightPanel
 
     protected JButton calculateBtn;           // the button to trigger calculation
 
-    //private JComponent valueGraphTab;       // the tab for optionValue graph view
+    /*private JComponent valueGraphTab;       // the tab for optionValue graph view
     protected JComponent deltaGraphTab;       // the tab for delta graph view
     protected JComponent deltaXGraphTab;      // the tab for deltaX graph view
     protected JComponent dDeltaDvolGraphTab;  // the tab for dDeltaDvol graph view
@@ -58,14 +58,14 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     protected JComponent elasticityGraphTab;  // the tab for elasticity graph view
     protected JComponent thetaGraphTab;       // the tab for theta graph view
     protected JComponent speedGraphTab;       // the tab for speed graph view
-    protected JComponent carryGraphTab;       // the tab for carry graph view
+    protected JComponent carryGraphTab;       // the tab for carry graph view*/
     
 
     protected String mainPanelTitle;
 
     //private final String VALUE_TAB_TITLE = "Option Value";
     protected final String CALCULATE_BUTTON_LABEL = "Calculate";
-    protected final String DELTA_TAB_TITLE = "Delta";
+    /*protected final String DELTA_TAB_TITLE = "Delta";
     protected final String DELTAX_TAB_TITLE = "DeltaX";
     protected final String DDELTA_DVOL_TAB_TITLE = "dDeltaDvol";
     protected final String GAMMA_TAB_TITLE = "Gamma";
@@ -81,9 +81,9 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
     protected final String THETA_TAB_TITLE = "Theta";
     protected final String SPEED_TAB_TITLE = "Speed";
     protected final String CARRY_TAB_TITLE = "Carry";
-    protected final String RISK_NEUTRAL_DENSITY_TITLE = "Risk Neutral Density";
+    protected final String RISK_NEUTRAL_DENSITY_TITLE = "Risk Neutral Density";*/
     
-    public OPCTabbedPane()
+    public OPCBasePane()
     {
         super();
         //initComponent();
@@ -99,34 +99,44 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         calculateBtn = new JButton( CALCULATE_BUTTON_LABEL );
         calculateBtn.addActionListener( this );
         
-        mainPanel = new JPanel();
+        //mainPanel = new JPanel();
         leftPanel = new JPanel();
         rightPanel = new JPanel();
         inputPanel = new OPCInputPane();
         outputPanel = new OPCOutputPane();
+
         btnPanel = new JPanel();
+        btnPanel.setLayout( new BoxLayout(btnPanel, BoxLayout.PAGE_AXIS) );
+        btnPanel.add(Box.createRigidArea(new Dimension(0,180)));
         btnPanel.add( calculateBtn );
-        
+        btnPanel.add(Box.createRigidArea(new Dimension(0,250)));
+
+        /*leftPanel.setLayout( new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS) );
+        leftPanel.add(Box.createRigidArea(new Dimension(0,20)));
+        leftPanel.add( inputPanel );
+        leftPanel.add(Box.createRigidArea(new Dimension(0,130)));*/
+        leftPanel.setLayout( new BorderLayout() );
+        leftPanel.add( Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH );
+        leftPanel.add( inputPanel, BorderLayout.CENTER );
+        leftPanel.add( Box.createRigidArea(new Dimension(0,130)), BorderLayout.SOUTH );
+
         JPanel tempPanel = new JPanel();
-        tempPanel.setLayout( new BoxLayout(tempPanel, BoxLayout.PAGE_AXIS) );
-        tempPanel.add( inputPanel );
-        tempPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        tempPanel.setLayout( new BoxLayout(tempPanel, BoxLayout.LINE_AXIS) );
+        tempPanel.add( leftPanel );
+        tempPanel.add(Box.createRigidArea(new Dimension(5,0)));
         tempPanel.add( btnPanel );
-        tempPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        tempPanel.add(Box.createRigidArea(new Dimension(5,0)));
         tempPanel.add( outputPanel );
 
-        leftPanel.setLayout( new BorderLayout() );
-        leftPanel.add( tempPanel, BorderLayout.NORTH );
-        leftPanel.add( new JPanel(), BorderLayout.CENTER );
-        
-        rightPanel = makeTextPanel( "To be implemented" );
+        //rightPanel = makeTextPanel( "To be implemented" );*/
 
-        mainPanel.setLayout( new BorderLayout() );
-        mainPanel.add( leftPanel, BorderLayout.WEST );
-        mainPanel.add( new JSeparator(SwingConstants.VERTICAL), BorderLayout.CENTER );
-        mainPanel.add( rightPanel, BorderLayout.EAST );
+        this.setLayout( new BorderLayout() );
+        this.add( new JPanel(), BorderLayout.WEST );
+        //this.add( new JSeparator(SwingConstants.VERTICAL), BorderLayout.CENTER );
+        this.add( tempPanel, BorderLayout.CENTER );
+        this.add( new JPanel(), BorderLayout.EAST );
 
-        deltaGraphTab = makeTextPanel( "To be implemented" );
+        /*deltaGraphTab = makeTextPanel( "To be implemented" );
         deltaXGraphTab = makeTextPanel( "To be implemented" );
         dDeltaDvolGraphTab = makeTextPanel( "To be implemented" );
         gammaGraphTab = makeTextPanel( "To be implemented" );
@@ -141,10 +151,10 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         elasticityGraphTab = makeTextPanel( "To be implemented" );
         thetaGraphTab = makeTextPanel( "To be implemented" );
         speedGraphTab = makeTextPanel( "To be implemented" );
-        carryGraphTab = makeTextPanel( "To be implemented" );
+        carryGraphTab = makeTextPanel( "To be implemented" );*/
         
-        this.addTab( mainPanelTitle, null, mainPanel, "Main Panel" );
-        this.addTab( DELTA_TAB_TITLE, null, deltaGraphTab, "Delta Graph Panel");
+        //this.addTab( mainPanelTitle, null, mainPanel, "Main Panel" );
+        /*this.addTab( DELTA_TAB_TITLE, null, deltaGraphTab, "Delta Graph Panel");
         this.addTab( DELTAX_TAB_TITLE, null, deltaXGraphTab, "DeltaX Graph Panel");
         this.addTab( DDELTA_DVOL_TAB_TITLE, null, dDeltaDvolGraphTab, "dDeltaDvol Graph Panel" );
         this.addTab( GAMMA_TAB_TITLE, null, gammaGraphTab, "Gamma Graph Panel" );
@@ -159,7 +169,7 @@ public class OPCTabbedPane extends JTabbedPane implements ActionListener {
         this.addTab( ELASTICITY_TAB_TITLE, null, elasticityGraphTab, "Elasticity Graph Panel");
         this.addTab( THETA_TAB_TITLE, null, thetaGraphTab, "Theta Graph Panel" );
         this.addTab( SPEED_TAB_TITLE, null, speedGraphTab, "Speed Graph Panel" );
-        this.addTab( CARRY_TAB_TITLE, null, carryGraphTab, "Carry Graph Panel" );
+        this.addTab( CARRY_TAB_TITLE, null, carryGraphTab, "Carry Graph Panel" );*/
         
         //this.setMnemonicAt(3, KeyEvent.VK_4);
     }

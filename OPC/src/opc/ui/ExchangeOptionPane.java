@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class MaxMinOptionsTabbedPane extends OPCTabbedPane {
+public class ExchangeOptionPane extends OPCBasePane {
 
 }
