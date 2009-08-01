@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class PowerLogOptionsTabbedPane extends OPCTabbedPane {
+public class SpreadOptionPane extends OPCBasePane {
 
 }

@@ -1,13 +1,12 @@
 package opc.util;
 
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 import opc.calculator.OptionsCalculatorInterface;
 
 public class UIComponentCreator {
 
+    private final static String IMG_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\img\\Show Plot.png";
     private static final int INPUT_FIELD_SIZE = 10;
     private static final String INPUT_FIELD_DEFAULT_VALUE = "0";
     private static final String[] COMPOUNDING_FREQUENCY_ITEMS = 
@@ -45,5 +44,24 @@ public class UIComponentCreator {
     {
         return new JComboBox( BASIC_OPTION_TYPES );
     }
-    
+
+    public static JButton createImageButton( String action, String toolTip, boolean visible )
+    {
+        ImageIcon icon = new ImageIcon( IMG_LOCATION );
+        JButton result = new JButton( "", icon );
+        result.setActionCommand( action );
+        result.setVisible( visible );
+        result.setToolTipText( toolTip );
+
+        return result;
+    }
+
+    public static JButton createButton( String action, String label, boolean visible )
+    {
+        JButton result = new JButton( label );
+        result.setActionCommand( action );
+        result.setVisible( visible );
+
+        return result;
+    }
 }

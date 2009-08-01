@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class MultiTimeOptionsTabbedPane extends OPCTabbedPane {
+public class CashOrNothingOptionPane extends OPCBasePane {
 
 }

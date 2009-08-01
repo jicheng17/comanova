@@ -23,7 +23,7 @@ import opc.util.UIComponentCreator;
  *
  * @author ZHAO QINGHUA
  */
-public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
+public class CurrencyOptionPane extends OPCBasePane {
 
     private final String CURRENCY_SPOT_PRICE_STRING = "Currency Spot Price: ";
     private final String FOREIGN_RISK_FREE_RATE_STRING = "Foreign Risk Free Rate: ";
@@ -41,9 +41,9 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
     private ButtonGroup callPutGroup;
     private JComboBox foreignRiskCompoundingComboBox;
 
-    private JComponent riskNeutralDensityGraphTab;
+    //private JComponent riskNeutralDensityGraphTab;
 
-    public CurrencyOptionsTabbedPane()
+    public CurrencyOptionPane()
     {
         super();
     }
@@ -77,10 +77,8 @@ public class CurrencyOptionsTabbedPane extends OPCTabbedPane {
         inputPanel.addInputComponent( foreignRiskCompoundingLabel, foreignRiskCompoundingComboBox, 
                 OPCInputPane.INPUT_TYPE.COMBO_BOX, 1 );
 
-        outputPanel.addRiskNeutralDensity();
-
-        riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
-        this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
+        //riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
+        //this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
     }
     
     public HashMap<String,String> constructInputMap()

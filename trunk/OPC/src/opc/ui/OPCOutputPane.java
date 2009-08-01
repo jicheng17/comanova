@@ -7,9 +7,13 @@ package opc.ui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
@@ -18,7 +22,7 @@ import opc.util.UIComponentCreator;
  *
  * @author ZHAO QINGHUA
  */
-public class OPCOutputPane extends JPanel {
+public class OPCOutputPane extends JPanel implements ActionListener {
 
     private final String OPTION_VALUE_STRING = "Option Value: ";
     private final String AMERICAN_OPTION_VALUE_STRING = "American Option Value: ";
@@ -39,10 +43,31 @@ public class OPCOutputPane extends JPanel {
     private final String THETA_STRING = "Theta: ";
     private final String SPEED_STRING = "Speed: ";
     private final String CARRY_STRING = "Carry: ";
-    private final String RISK_NEUTRAL_DENSITY_STRING = "Risk Neutral Density: ";
+
+    public interface BUTTON_ACTION
+    {
+        public final String SHOW_OPTION_VALUE = "1";
+        public final String SHOW_DELTA = "2";
+        public final String SHOW_DELTAX = "3";
+        public final String SHOW_DDELTA_DVOL = "4";
+        public final String SHOW_GAMMA = "5";
+        public final String SHOW_GAMMAX = "6";
+        public final String SHOW_GAMMAP = "7";
+        public final String SHOW_DGAMMA_DVOL = "8";
+        public final String SHOW_VEGA = "9";
+        public final String SHOW_VEGAP = "10";
+        public final String SHOW_DVEGA_DVOL = "11";
+        public final String SHOW_RHO = "12";
+        public final String SHOW_FUTURES_RHO = "13";
+        public final String SHOW_ELASTICITY = "14";
+        public final String SHOW_THETA = "15";
+        public final String SHOW_SPEED = "16";
+        public final String SHOW_CARRY = "17";
+    }
 
     private JPanel labelPane;
     private JPanel fieldPane;
+    private JPanel buttonPane;
 
     private JLabel optionValueLabel;
     private JLabel europeanOptionValueLabel;
@@ -62,7 +87,6 @@ public class OPCOutputPane extends JPanel {
     private JLabel thetaLabel;
     private JLabel speedLabel;
     private JLabel carryLabel;
-    private JLabel riskNeutralDensityLabel;
 
     private JFormattedTextField optionValueField;
     private JFormattedTextField europeanOptionValueField;
@@ -82,8 +106,25 @@ public class OPCOutputPane extends JPanel {
     private JFormattedTextField thetaField;
     private JFormattedTextField speedField;
     private JFormattedTextField carryField;
-    private JFormattedTextField riskNeutralDensityField;
 
+    private JButton optionValueButton;
+    private JButton europeanOptionValueButton;
+    private JButton deltaButton;
+    private JButton deltaXButton;
+    private JButton dDeltaDvolButton;
+    private JButton gammaButton;
+    private JButton gammaXButton;
+    private JButton gammaPButton;
+    private JButton dGammaDvolButton;
+    private JButton vegaButton;
+    private JButton vegaPButton;
+    private JButton dVegaDvolButton;
+    private JButton rhoButton;
+    private JButton futuresRhoButton;
+    private JButton elasticityButton;
+    private JButton thetaButton;
+    private JButton speedButton;
+    private JButton carryButton;
 
     public OPCOutputPane()
     {
@@ -112,7 +153,6 @@ public class OPCOutputPane extends JPanel {
         thetaLabel = new JLabel( THETA_STRING );
         speedLabel = new JLabel( SPEED_STRING );
         carryLabel = new JLabel( CARRY_STRING );
-        riskNeutralDensityLabel = new JLabel( RISK_NEUTRAL_DENSITY_STRING );
 
         // init text fields
         optionValueField = UIComponentCreator.createTextField( false );
@@ -133,7 +173,26 @@ public class OPCOutputPane extends JPanel {
         thetaField = UIComponentCreator.createTextField( false );
         speedField = UIComponentCreator.createTextField( false );
         carryField = UIComponentCreator.createTextField( false );
-        riskNeutralDensityField = UIComponentCreator.createTextField( false );
+
+        // init buttons
+        optionValueButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_OPTION_VALUE, "Show Plot", true );
+        europeanOptionValueButton = UIComponentCreator.createButton( "", "Show Plot", false );
+        deltaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DELTA, "Show Plot", true );
+        deltaXButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DELTAX, "Show Plot", true );
+        dDeltaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DDELTA_DVOL, "Show Plot", true );
+        gammaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMA, "Show Plot", true );
+        gammaXButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMAX, "Show Plot", true );
+        gammaPButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMAP, "Show Plot", true );
+        dGammaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DGAMMA_DVOL, "Show Plot", true );
+        vegaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_VEGA, "Show Plot", true );
+        vegaPButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_VEGAP, "Show Plot", true );
+        dVegaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DVEGA_DVOL, "Show Plot", true );
+        rhoButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_RHO, "Show Plot", true );
+        futuresRhoButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_FUTURES_RHO, "Show Plot", true );
+        elasticityButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_ELASTICITY, "Show Plot", true );
+        thetaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_THETA, "Show Plot", true );
+        speedButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_SPEED, "Show Plot", true );
+        carryButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_CARRY, "Show Plot", true );
 
         // bond labels to text fields
         optionValueLabel.setLabelFor( optionValueField );
@@ -193,12 +252,33 @@ public class OPCOutputPane extends JPanel {
         fieldPane.add( thetaField );
         fieldPane.add( speedField );
         fieldPane.add( carryField );
-        
+
+        // Layout the buttons in a panel
+        buttonPane = new JPanel(new GridLayout(0,1) );
+        buttonPane.add( optionValueButton );
+        buttonPane.add( deltaButton );
+        buttonPane.add( deltaXButton );
+        buttonPane.add( dDeltaDvolButton );
+        buttonPane.add( gammaButton );
+        buttonPane.add( gammaXButton );
+        buttonPane.add( gammaPButton );
+        buttonPane.add( dGammaDvolButton );
+        buttonPane.add( vegaButton );
+        buttonPane.add( vegaPButton );
+        buttonPane.add( dVegaDvolButton );
+        buttonPane.add( rhoButton );
+        buttonPane.add( futuresRhoButton );
+        buttonPane.add( elasticityButton );
+        buttonPane.add( thetaButton );
+        buttonPane.add( speedButton );
+        buttonPane.add( carryButton );
+
         //Put the panels in this panel, labels on left,
         //text fields on right.
         setBorder(BorderFactory.createTitledBorder("OUTPUT"));
-        add(labelPane, BorderLayout.CENTER);
-        add(fieldPane, BorderLayout.LINE_END);
+        add(labelPane, BorderLayout.LINE_START);
+        add(fieldPane, BorderLayout.CENTER);
+        add(buttonPane, BorderLayout.LINE_END);
     }
 
     public void addOutputComponent( JLabel label, JFormattedTextField component )
@@ -210,15 +290,6 @@ public class OPCOutputPane extends JPanel {
         fieldPane.validate();
     }
 
-    public void addRiskNeutralDensity()
-    {
-        riskNeutralDensityLabel.setLabelFor( riskNeutralDensityField );
-        labelPane.add( riskNeutralDensityLabel );
-        labelPane.validate();
-        fieldPane.add( riskNeutralDensityField );
-        fieldPane.validate();
-    }
-
     public void addEuropeanOptionValue()
     {
         optionValueLabel.setText( AMERICAN_OPTION_VALUE_STRING );
@@ -227,6 +298,8 @@ public class OPCOutputPane extends JPanel {
         labelPane.validate();
         fieldPane.add( europeanOptionValueField, 1 );
         fieldPane.validate();
+        buttonPane.add( europeanOptionValueButton, 1 );
+        buttonPane.validate();
     }
 
     public void removeTheta()
@@ -235,6 +308,8 @@ public class OPCOutputPane extends JPanel {
         labelPane.validate();
         fieldPane.remove( thetaField );
         fieldPane.validate();
+        buttonPane.remove( thetaButton );
+        buttonPane.validate();
     }
 
     public void setOptionValue( String value )
@@ -327,9 +402,8 @@ public class OPCOutputPane extends JPanel {
         carryField.setValue( value );
     }
 
-    public void setRiskNeutralDensity( String value )
+    public void actionPerformed( ActionEvent e )
     {
-        riskNeutralDensityField.setValue( value );
+
     }
-    
 }

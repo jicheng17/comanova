@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class ForwardStartOptionsTabbedPane extends OPCTabbedPane {
+public class FXLinkedOptionPane extends OPCBasePane {
 
 }

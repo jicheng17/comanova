@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class ExchangeOptionsTabbedPane extends OPCTabbedPane {
+public class TwoAssetBarrierOptionPane extends OPCBasePane {
 
 }

@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class LookbackOptionsTabbedPane extends OPCTabbedPane {
+public class BinaryOptionPane extends OPCBasePane {
 
 }

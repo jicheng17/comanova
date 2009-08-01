@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class BestTwoDigitalOptionsTabbedPane extends OPCTabbedPane {
+public class ForwardStartOptionPane extends OPCBasePane {
 
 }

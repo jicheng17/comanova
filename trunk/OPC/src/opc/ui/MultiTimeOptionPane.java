@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class MirrorOptionsTabbedPane extends OPCTabbedPane {
+public class MultiTimeOptionPane extends OPCBasePane {
 
 }

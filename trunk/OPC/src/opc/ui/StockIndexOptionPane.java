@@ -23,7 +23,7 @@ import opc.util.UIComponentCreator;
  *
  * @author ZHAO QINGHUA
  */
-public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
+public class StockIndexOptionPane extends OPCBasePane {
 
     private final String STOCK_INDEX_PRICE_STRING = "Stock Index Price: ";
     private final String DIVIDEND_YIELD_STRING = "Dividend Yield: ";
@@ -41,9 +41,7 @@ public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
     private ButtonGroup callPutGroup;
     private JComboBox dividendCompoundingComboBox;
 
-    private JComponent riskNeutralDensityGraphTab;
-
-    public StockIndexOptionsTabbedPane()
+    public StockIndexOptionPane()
     {
         super();
     }
@@ -76,11 +74,6 @@ public class StockIndexOptionsTabbedPane extends OPCTabbedPane {
         inputPanel.addInputComponent( callPutLabel, callPutPane, OPCInputPane.INPUT_TYPE.RADIO_BUTTON, 0 );
         inputPanel.addInputComponent( dividendCompoundingLabel, dividendCompoundingComboBox, 
                 OPCInputPane.INPUT_TYPE.COMBO_BOX, 1 );
-
-        outputPanel.addRiskNeutralDensity();
-
-        riskNeutralDensityGraphTab = makeTextPanel( "To be implemented" );
-        this.addTab( RISK_NEUTRAL_DENSITY_TITLE, null, riskNeutralDensityGraphTab, "Risk Neutral Density Graph Panel" );
 
     }
     

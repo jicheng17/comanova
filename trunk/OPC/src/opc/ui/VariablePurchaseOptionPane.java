@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class FadeInOptionsTabbedPane extends OPCTabbedPane {
+public class VariablePurchaseOptionPane extends OPCBasePane {
 
 }

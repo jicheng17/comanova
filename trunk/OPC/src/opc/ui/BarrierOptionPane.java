@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class OutPerformanceOptionsTabbedPane extends OPCTabbedPane {
+public class BarrierOptionPane extends OPCBasePane {
 
 }
