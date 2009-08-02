@@ -171,12 +171,12 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
 
     public void setCarry()
     {
-        double phid1 = NormOneDim.pdf(d1);
+        double Nd1 = NormOneDim.cdf(d1);
         if (optionflag.equals(CALL_PUT.CALL)){
-            carry = eta*S*T*exp((b-r)*T)*phid1;
+            carry = eta*S*T*exp((b-r)*T)*Nd1;
         }
         else if (optionflag.equals(CALL_PUT.PUT)){
-            carry = eta*S*T*exp((b-r)*T)*(1-phid1);
+            carry = eta*S*T*exp((b-r)*T)*(Nd1-1);
         }
         carry = carry / 100;
     }

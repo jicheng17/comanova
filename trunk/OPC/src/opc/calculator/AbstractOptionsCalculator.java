@@ -9,6 +9,11 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
     // Input
     protected double S;
     protected double X;
+    protected double X1;
+    protected double X2;
+    protected double U;
+    protected double L;
+    protected double K;
     protected double sigma;
     protected double T;
     protected double r;

@@ -47,6 +47,11 @@ public interface OptionsCalculatorInterface {
         final String OPTION_TYPE = "optiontype";
         final String S = "S";
         final String X = "X";
+        final String K = "K";
+        final String X1 = "X1";
+        final String X2 = "X2";
+        final String U = "U";
+        final String L = "L";
         final String T = "T";
         final String SIGMA = "sigma";
         final String R = "r";
@@ -69,6 +74,11 @@ public interface OptionsCalculatorInterface {
         final String CURRENCY_SPOT_PRICE = CALCULATOR_INPUT.S;
         final String FUTURES_PRICE = CALCULATOR_INPUT.S;
         final String STRIKE_PRICE = CALCULATOR_INPUT.X;
+        final String LOWER_STRIKE_PRICE = CALCULATOR_INPUT.X1;
+        final String UPPER_STRIKE_PRICE = CALCULATOR_INPUT.X2;
+        final String LOWER_BARRIER = CALCULATOR_INPUT.L;
+        final String UPPER_BARRIER = CALCULATOR_INPUT.U;
+        final String CASH_REBATE = CALCULATOR_INPUT.K;
         final String TIME_TO_MATURITY = CALCULATOR_INPUT.T;
         final String RISK_FREE_RATE = CALCULATOR_INPUT.R;
         final String VOLATILITY = CALCULATOR_INPUT.SIGMA;
