@@ -24,7 +24,6 @@ import opc.mathalgo.NormOneDim;
 public class PlainVanillaOption extends AbstractOptionsCalculator {
 
     //Intermediate
-    protected int eta = 0; // eta = 1 for long position; eta = -1 for short position
     protected int phi = 0; // phi = 1 for call option; phi = -1 for put option
     protected double d1 = 0.0;
     protected double d2 = 0.0;
@@ -42,7 +41,8 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
     {
         longOrShort();
         callOrPut();
-
+        dvalues();
+        
         double Nd1 = NormOneDim.cdf(d1);
         double Nd2 = NormOneDim.cdf(d2);
         
@@ -206,14 +206,6 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
         return null;
     }
 
-    public void longOrShort()
-    {
-        if (positionflag.equals(LONG_SHORT.LONG))
-            eta = 1;
-        else if (positionflag.equals(LONG_SHORT.SHORT))
-            eta = -1;
-    }
-
     public void callOrPut()
     {
         if (optionflag.equals(CALL_PUT.CALL))
@@ -225,8 +217,6 @@ public class PlainVanillaOption extends AbstractOptionsCalculator {
     // calculate options values and sensitivities
     public void calculate()
     {
-        dvalues();
-
         setPrice();
         setDelta();
         setDeltaX();

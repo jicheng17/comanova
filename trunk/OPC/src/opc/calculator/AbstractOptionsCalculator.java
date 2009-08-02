@@ -26,6 +26,8 @@ public abstract class AbstractOptionsCalculator implements OptionsCalculatorInte
     protected String timeconvention;
     protected String positionflag;
     protected String optionflag;
+    protected String lowerbarrierflag;
+    protected String upperbarrierflag;
     protected String optiontype;
 
     // Output
