@@ -9,6 +9,6 @@ package opc.ui;
  *
  * @author ZHAO QINGHUA
  */
-public class BinaryOptionPane extends OPCBasePane {
+public class AssetsOrNothingOptionPane extends OPCBasePane {
 
 }

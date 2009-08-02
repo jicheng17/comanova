@@ -184,7 +184,12 @@ public class OPCInputPane extends JPanel {
         fieldPane.remove( timeUnitPane );
         fieldPane.validate();
     }
-    
+
+    public void changeStrikeLabel( String newLabel )
+    {
+        strikePriceLabel.setText( newLabel );
+    }
+
     public void addInputComponent( JLabel label, JComponent component, int inputType, int offset )
     {
         int index = 0;

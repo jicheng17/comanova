@@ -253,6 +253,7 @@ public class OPCBasePane extends JPanel implements ActionListener {
         String riskFreeCompounding = inputPanel.getRiskFreeCompounding();
         
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.STRIKE_PRICE, strikePrice.trim() );
+        inputMap.put( OptionsCalculatorInterface.GUI_INPUT.LOWER_STRIKE_PRICE, strikePrice.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.TIME_TO_MATURITY, timeToMaturity.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.RISK_FREE_RATE, riskFreeRate.trim() );
         inputMap.put( OptionsCalculatorInterface.GUI_INPUT.VOLATILITY, volatility.trim() );
@@ -266,21 +267,37 @@ public class OPCBasePane extends JPanel implements ActionListener {
     public void refreshOutput( HashMap<String,String> outputMap )
     {
         outputPanel.setOptionValue( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.OPTION_VALUE) );
-        outputPanel.setDelta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) );
-        outputPanel.setDeltaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTAX) );
-        outputPanel.setDDeltaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_DELTA_DVOL) );
-        outputPanel.setGamma( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) );
-        outputPanel.setVega( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) );
-        outputPanel.setGammaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_X) );
-        outputPanel.setGammaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) );
-        outputPanel.setDGammaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_GAMMA_DVOL) );
-        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) );
-        outputPanel.setDVegaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_VEGA_DVOL) );
-        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) );
-        outputPanel.setFuturesRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.FUTURESRHO) );
-        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) );
-        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) );
-        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) );
-        outputPanel.setCarry( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.CARRY) );
+        outputPanel.setDelta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTA) : OPCOutputPane.NA );
+        outputPanel.setDeltaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTAX) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.DELTAX) : OPCOutputPane.NA );
+        outputPanel.setDDeltaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_DELTA_DVOL) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_DELTA_DVOL) : OPCOutputPane.NA );
+        outputPanel.setGamma( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA) : OPCOutputPane.NA );
+        outputPanel.setVega( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA) : OPCOutputPane.NA );
+        outputPanel.setGammaX( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_X) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_X) : OPCOutputPane.NA );
+        outputPanel.setGammaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.GAMMA_P) : OPCOutputPane.NA );
+        outputPanel.setDGammaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_GAMMA_DVOL) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_GAMMA_DVOL) : OPCOutputPane.NA );
+        outputPanel.setVegaP( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.VEGA_P) : OPCOutputPane.NA );
+        outputPanel.setDVegaDvol( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_VEGA_DVOL) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.D_VEGA_DVOL) : OPCOutputPane.NA );
+        outputPanel.setRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.RHO) : OPCOutputPane.NA );
+        outputPanel.setFuturesRho( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.FUTURESRHO) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.FUTURESRHO) : OPCOutputPane.NA );
+        outputPanel.setElasticity( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.ELASTICITY) : OPCOutputPane.NA );
+        outputPanel.setTheta( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.THETA) : OPCOutputPane.NA );
+        outputPanel.setSpeed( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.SPEED) : OPCOutputPane.NA );
+        outputPanel.setCarry( outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.CARRY) != null ? 
+                outputMap.get(OptionsCalculatorInterface.GUI_OUTPUT.CARRY) : OPCOutputPane.NA );
     }
 }

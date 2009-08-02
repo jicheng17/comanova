@@ -1,6 +1,7 @@
 package opc.util;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 import opc.calculator.OptionsCalculatorInterface;
 
@@ -8,7 +9,7 @@ public class UIComponentCreator {
 
     private final static String IMG_LOCATION = "C:\\Documents and Settings\\ZHAO QINGHUA\\My Documents\\NetBeansProjects\\comanova\\OPC\\img\\Show Plot.png";
     private static final int INPUT_FIELD_SIZE = 10;
-    private static final String INPUT_FIELD_DEFAULT_VALUE = "0";
+    public static final String INPUT_FIELD_DEFAULT_VALUE = "0";
     private static final String[] COMPOUNDING_FREQUENCY_ITEMS = 
         { "Continuously", "Annually", "Semi-annually", "Quarterly", "Monthly" };
     private static final String[] BASIC_OPTION_TYPES =
@@ -56,12 +57,12 @@ public class UIComponentCreator {
         return result;
     }
 
-    public static JButton createButton( String action, String label, boolean visible )
+    public static JButton createButton( String action, String label, boolean visible, ActionListener listener )
     {
         JButton result = new JButton( label );
         result.setActionCommand( action );
         result.setVisible( visible );
-
+        result.addActionListener( listener );
         return result;
     }
 }
