@@ -22,7 +22,6 @@ import opc.mathalgo.NormOneDim;
 public class SuperShareOption extends AbstractOptionsCalculator{
 
      //Intermediate
-    protected int eta = 0; // eta = 1 for long position; eta = -1 for short position
     protected double d1 = 0.0;
     protected double d2 = 0.0;
 
@@ -38,7 +37,8 @@ public class SuperShareOption extends AbstractOptionsCalculator{
     public void setPrice()
     {
         longOrShort();
-
+        dvalues();
+        
         double Nd1 = NormOneDim.cdf(d1);
         double Nd2 = NormOneDim.cdf(d2);
 
@@ -64,19 +64,9 @@ public class SuperShareOption extends AbstractOptionsCalculator{
         return null;
     }
 
-    public void longOrShort()
-    {
-        if (positionflag.equals(LONG_SHORT.LONG))
-            eta = 1;
-        else if (positionflag.equals(LONG_SHORT.SHORT))
-            eta = -1;
-    }
-
     // calculate options values and sensitivities
     public void calculate()
     {
-        dvalues();
-
         setPrice();
         setDelta();
         //setDeltaX();
@@ -108,7 +98,7 @@ public class SuperShareOption extends AbstractOptionsCalculator{
         this.timeconvention = inputs.get(CALCULATOR_INPUT.TIME_CONVENTION);
         this.rtype = inputs.get(CALCULATOR_INPUT.R_TYPE);
         this.positionflag = inputs.get(CALCULATOR_INPUT.POSITION_FLAG);
-        this.optionflag = inputs.get(CALCULATOR_INPUT.OPTION_FLAG);
+        //this.optionflag = inputs.get(CALCULATOR_INPUT.OPTION_FLAG);
         this.r = Adjustment.getContinuousRate(r, rtype);
         this.T = Adjustment.getAnnualTime(T, timeconvention);
         this.optiontype = inputs.get(CALCULATOR_INPUT.OPTION_TYPE);

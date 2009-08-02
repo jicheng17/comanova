@@ -22,7 +22,6 @@ import opc.mathalgo.NormOneDim;
 public class CashOrNothingOption extends AbstractOptionsCalculator{
 
      //Intermediate
-    protected int eta = 0; // eta = 1 for long position; eta = -1 for short position
     protected int phi = 0; // phi = 1 for call option; phi = -1 for put option
     protected double d = 0.0;
 
@@ -39,6 +38,7 @@ public class CashOrNothingOption extends AbstractOptionsCalculator{
     {
         longOrShort();
         callOrPut();
+        dvalues();
 
         double Nd = NormOneDim.cdf(phi*d);
 
@@ -63,14 +63,6 @@ public class CashOrNothingOption extends AbstractOptionsCalculator{
         return null;
     }
 
-    public void longOrShort()
-    {
-        if (positionflag.equals(LONG_SHORT.LONG))
-            eta = 1;
-        else if (positionflag.equals(LONG_SHORT.SHORT))
-            eta = -1;
-    }
-
     public void callOrPut()
     {
         if (optionflag.equals(CALL_PUT.CALL))
@@ -82,8 +74,6 @@ public class CashOrNothingOption extends AbstractOptionsCalculator{
     // calculate options values and sensitivities
     public void calculate()
     {
-        dvalues();
-
         setPrice();
         setDelta();
         setDeltaX();

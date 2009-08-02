@@ -63,6 +63,8 @@ public interface OptionsCalculatorInterface {
         final String TIME_CONVENTION = "timeconvention";
         final String POSITION_FLAG = "positionflag";
         final String OPTION_FLAG = "optionflag";
+        final String LOWER_BARRIER_FLAG = "lowerbarrierflag";
+        final String UPPER_BARRIER_FLAG = "upperbarrierflag";
     }
     
     public interface GUI_INPUT
@@ -78,6 +80,8 @@ public interface OptionsCalculatorInterface {
         final String UPPER_STRIKE_PRICE = CALCULATOR_INPUT.X2;
         final String LOWER_BARRIER = CALCULATOR_INPUT.L;
         final String UPPER_BARRIER = CALCULATOR_INPUT.U;
+        final String LOWER_BARRIER_FLAG = CALCULATOR_INPUT.LOWER_BARRIER_FLAG;
+        final String UPPER_BARRIER_FLAG = CALCULATOR_INPUT.UPPER_BARRIER_FLAG;
         final String CASH_REBATE = CALCULATOR_INPUT.K;
         final String TIME_TO_MATURITY = CALCULATOR_INPUT.T;
         final String RISK_FREE_RATE = CALCULATOR_INPUT.R;

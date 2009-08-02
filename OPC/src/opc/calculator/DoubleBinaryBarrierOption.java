@@ -20,7 +20,6 @@ import opc.mathalgo.NormOneDim;
 public class DoubleBinaryBarrierOption extends AbstractOptionsCalculator{
 
       //Intermediate
-    protected int eta = 0; // eta = 1 for long position; eta = -1 for short position
     protected int phi = 0; // phi = 1 for call option; phi = -1 for put option
     protected double alpha = 0.0;
     protected double beta = 0.0;
@@ -38,11 +37,56 @@ public class DoubleBinaryBarrierOption extends AbstractOptionsCalculator{
     public void setPrice()
     {
         longOrShort();
-    
+        internalValues();
 
-        //double Nd = NormOneDim.cdf(phi*d);
+        if (upperbarrierflag.equals("KNOCKOUT"))
+        {
+            if (lowerbarrierflag.equals("KNOCKOUT"))
+            {
+                double sum = 0.0;
+                double iteration = 50;
+                for (int i = 1; i <= iteration; i++)
+                {
+                     sum = sum + (2 * PI * i * K / (Z * Z)) * 
+                           (pow(S/L,alpha) - pow(-1,i) * pow(S/U,alpha) / (alpha*alpha + pow(i*PI/Z,2)))
+                           * sin(i * PI * log(S/L) / Z)
+                           * exp(-0.5 * (pow(i*PI/Z,2)-beta) * sigma * sigma * T);
+                }
+                price = sum;
+            }
+            else if (lowerbarrierflag.equals("KNOCKIN"))
+            {
+                double sum = 0.0;
+                double iteration = 50;
+                for (int i = 1; i <= iteration; i++)
+                {
+                     sum = sum + 0;
+                }
+                price = K * pow(S/L, alpha) * (sum + 1 - log(S/L) / Z);
+            }
+        }
+        else if (upperbarrierflag.equals("KNOCKIN"))
+        {
+            if (lowerbarrierflag.equals("KNOCKOUT"))
+            {
 
-        //price = S * exp((b-r)*T) * Nd;
+            }
+            else if (lowerbarrierflag.equals("KNOCKIN"))
+            {
+                String orignallowerbarrierflag = lowerbarrierflag;
+                String orignalupperbarrierflag = upperbarrierflag;
+
+                lowerbarrierflag = "KNOCKOUT";
+                upperbarrierflag = "KNOCKOUT";
+
+                setPrice();
+                
+                price = K * exp(-r*T) - price;
+
+                lowerbarrierflag = orignallowerbarrierflag;
+                upperbarrierflag = orignalupperbarrierflag;
+            }
+        }
     }
 
     private void internalValues()
@@ -65,19 +109,9 @@ public class DoubleBinaryBarrierOption extends AbstractOptionsCalculator{
         return null;
     }
 
-    public void longOrShort()
-    {
-        if (positionflag.equals(LONG_SHORT.LONG))
-            eta = 1;
-        else if (positionflag.equals(LONG_SHORT.SHORT))
-            eta = -1;
-    }
-
     // calculate options values and sensitivities
     public void calculate()
     {
-        internalValues();
-
         setPrice();
         setDelta();
         //setDeltaX();
@@ -110,7 +144,9 @@ public class DoubleBinaryBarrierOption extends AbstractOptionsCalculator{
         this.timeconvention = inputs.get(CALCULATOR_INPUT.TIME_CONVENTION);
         this.rtype = inputs.get(CALCULATOR_INPUT.R_TYPE);
         this.positionflag = inputs.get(CALCULATOR_INPUT.POSITION_FLAG);
-        this.optionflag = inputs.get(CALCULATOR_INPUT.OPTION_FLAG);
+        //this.optionflag = inputs.get(CALCULATOR_INPUT.OPTION_FLAG);
+        this.lowerbarrierflag = inputs.get(CALCULATOR_INPUT.LOWER_BARRIER_FLAG);
+        this.upperbarrierflag = inputs.get(CALCULATOR_INPUT.UPPER_BARRIER_FLAG);
         this.r = Adjustment.getContinuousRate(r, rtype);
         this.T = Adjustment.getAnnualTime(T, timeconvention);
         this.optiontype = inputs.get(CALCULATOR_INPUT.OPTION_TYPE);
