@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +24,8 @@ import opc.util.UIComponentCreator;
  */
 public class OPCOutputPane extends JPanel implements ActionListener {
 
+    public final static String NA = "N.A.";
+    private final static String DEFAULT = "Default";
     private final String OPTION_VALUE_STRING = "Option Value: ";
     private final String AMERICAN_OPTION_VALUE_STRING = "American Option Value: ";
     private final String EUROPEAN_OPTION_VALUE_STRING = "European Option Value: ";
@@ -175,24 +177,24 @@ public class OPCOutputPane extends JPanel implements ActionListener {
         carryField = UIComponentCreator.createTextField( false );
 
         // init buttons
-        optionValueButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_OPTION_VALUE, "Show Plot", true );
-        europeanOptionValueButton = UIComponentCreator.createButton( "", "Show Plot", false );
-        deltaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DELTA, "Show Plot", true );
-        deltaXButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DELTAX, "Show Plot", true );
-        dDeltaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DDELTA_DVOL, "Show Plot", true );
-        gammaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMA, "Show Plot", true );
-        gammaXButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMAX, "Show Plot", true );
-        gammaPButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMAP, "Show Plot", true );
-        dGammaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DGAMMA_DVOL, "Show Plot", true );
-        vegaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_VEGA, "Show Plot", true );
-        vegaPButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_VEGAP, "Show Plot", true );
-        dVegaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DVEGA_DVOL, "Show Plot", true );
-        rhoButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_RHO, "Show Plot", true );
-        futuresRhoButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_FUTURES_RHO, "Show Plot", true );
-        elasticityButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_ELASTICITY, "Show Plot", true );
-        thetaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_THETA, "Show Plot", true );
-        speedButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_SPEED, "Show Plot", true );
-        carryButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_CARRY, "Show Plot", true );
+        optionValueButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_OPTION_VALUE, "Show Plot", true, this );
+        europeanOptionValueButton = UIComponentCreator.createButton( "", "Show Plot", false, this );
+        deltaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DELTA, "Show Plot", true, this );
+        deltaXButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DELTAX, "Show Plot", true, this );
+        dDeltaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DDELTA_DVOL, "Show Plot", true, this );
+        gammaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMA, "Show Plot", true, this );
+        gammaXButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMAX, "Show Plot", true, this );
+        gammaPButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_GAMMAP, "Show Plot", true, this );
+        dGammaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DGAMMA_DVOL, "Show Plot", true, this );
+        vegaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_VEGA, "Show Plot", true, this );
+        vegaPButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_VEGAP, "Show Plot", true, this );
+        dVegaDvolButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_DVEGA_DVOL, "Show Plot", true, this );
+        rhoButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_RHO, "Show Plot", true, this );
+        futuresRhoButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_FUTURES_RHO, "Show Plot", true, this );
+        elasticityButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_ELASTICITY, "Show Plot", true, this );
+        thetaButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_THETA, "Show Plot", true, this );
+        speedButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_SPEED, "Show Plot", true, this );
+        carryButton = UIComponentCreator.createButton( BUTTON_ACTION.SHOW_CARRY, "Show Plot", true, this );
 
         // bond labels to text fields
         optionValueLabel.setLabelFor( optionValueField );
@@ -404,6 +406,106 @@ public class OPCOutputPane extends JPanel implements ActionListener {
 
     public void actionPerformed( ActionEvent e )
     {
+        String action = e.getActionCommand();
+        if( action.equals(BUTTON_ACTION.SHOW_OPTION_VALUE) )
+        {
+            performGraphAnalysis( optionValueField, "Option Value" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_DELTA) )
+        {
+            performGraphAnalysis( deltaField, "Delta" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_DELTAX) )
+        {
+            performGraphAnalysis( deltaXField, "DeltaX" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_DDELTA_DVOL) )
+        {
+            performGraphAnalysis( dDeltaDvolField, "dDeltaDvol" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_GAMMA) )
+        {
+            performGraphAnalysis( gammaField, "Gamma" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_GAMMAX) )
+        {
+            performGraphAnalysis( gammaXField, "GammaX" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_GAMMAP) )
+        {
+            performGraphAnalysis( gammaPField, "GammaP" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_DGAMMA_DVOL) )
+        {
+            performGraphAnalysis( dGammaDvolField, "dGammaDvol" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_VEGA) )
+        {
+            performGraphAnalysis( vegaField, "Vega" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_VEGAP) )
+        {
+            performGraphAnalysis( vegaPField, "VegaP" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_DVEGA_DVOL) )
+        {
+            performGraphAnalysis( dVegaDvolField, "dVegaDvol" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_RHO) )
+        {
+            performGraphAnalysis( rhoField, "Rho" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_FUTURES_RHO) )
+        {
+            performGraphAnalysis( futuresRhoField, "FuturesRho" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_ELASTICITY) )
+        {
+            performGraphAnalysis( elasticityField, "Elasticity" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_THETA) )
+        {
+            performGraphAnalysis( thetaField, "Theta" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_SPEED) )
+        {
+            performGraphAnalysis( speedField, "Speed" );
+        }
+        else if (action.equals(BUTTON_ACTION.SHOW_CARRY) )
+        {
+            performGraphAnalysis( carryField, "Carry" );
+        }
+    }
 
+    private void performGraphAnalysis( JFormattedTextField field, String label )
+    {
+        if( field.getValue().equals(UIComponentCreator.INPUT_FIELD_DEFAULT_VALUE) )
+        {
+            showGraph( DEFAULT );
+        }
+        else if( field.getValue().equals(NA) )
+        {
+            showGraph( NA );
+        }
+        else
+        {
+            showGraph( label );
+        }
+    }
+
+    private void showGraph( String label )
+    {
+        if( label.equals(DEFAULT) )
+        {
+            JOptionPane.showMessageDialog(this, "Output data not available yet!");
+        }
+        else if( label.equals(NA) )
+        {
+            JOptionPane.showMessageDialog(this, "Output graph not applicable!");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Graph Plot of " + label + ": " + " Sorry, not implemented yet!" );
+        }
     }
 }
