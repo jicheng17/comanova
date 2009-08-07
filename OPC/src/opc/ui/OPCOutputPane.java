@@ -5,17 +5,18 @@
 
 package opc.ui;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import opc.util.UIComponentCreator;
 /**
@@ -497,7 +498,10 @@ public class OPCOutputPane extends JPanel implements ActionListener {
     {
         if( label.equals(DEFAULT) )
         {
-            JOptionPane.showMessageDialog(this, "Output data not available yet!");
+            //JOptionPane.showMessageDialog(this, "Output data not available yet!");
+            JDialog popUp = new JDialog( OPCMainUI.getInstance().mainFrame, "Output data not available yet!", false );   
+            popUp.setSize( 500, 500 );
+            popUp.setVisible( true );
         }
         else if( label.equals(NA) )
         {

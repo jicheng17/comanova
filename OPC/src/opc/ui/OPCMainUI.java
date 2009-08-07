@@ -5,18 +5,20 @@
 package opc.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.UIManager;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
@@ -42,7 +44,7 @@ public class OPCMainUI {
 
     public static HashMap<String, String> treeNodeNameCalculatorClassMap;
     public static HashMap<String,String> treeNodeNameUIClassMap;
-    private JFrame mainFrame;
+    public JFrame mainFrame;
     private JSplitPane splitPane;
     private JTree optionModelTree;
     private JScrollPane treeView;
@@ -151,6 +153,18 @@ public class OPCMainUI {
         return result;
     }
 
+    private void positionWindow()
+    {
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = kit.getScreenSize();
+        
+        int x = (screenSize.width - mainFrame.getWidth()) / 2;
+        int y = (screenSize.height - mainFrame.getHeight()) / 2;
+
+        //Set the new frame location
+        mainFrame.setLocation(x, y); 
+    }
+    
     public void show()
     {
         initComponents();
@@ -171,6 +185,7 @@ public class OPCMainUI {
         }
         mainFrame.setDefaultLookAndFeelDecorated(true);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
+        positionWindow();
         mainFrame.setResizable( false );
         mainFrame.setVisible(true);
     }
