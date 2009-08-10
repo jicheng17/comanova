@@ -14,7 +14,6 @@ import java.util.HashMap;
 public interface OptionsCalculatorInterface {
 
     
-
     public interface LONG_SHORT
     {
         final String LONG = "Long";
@@ -31,6 +30,44 @@ public interface OptionsCalculatorInterface {
     {
         final String YEAR = "Years";
         final String DAY = "Days";
+    }
+
+    public interface IN_OUT
+    {
+        final String IN = "in";
+        final String OUT = "out";
+    }
+
+    public interface SINGLE_BINARY_BARRIER_TYPE
+    {
+        final int DICashOrNothingNoneAtHit = 1;
+        final int UICashOrNothingNoneAtHit = 2;
+        final int DIAssetOrNothingNoneAtHit = 3;
+        final int UIAssetOrNothingNoneAtHit = 4;
+        final int DICashOrNothingNoneAtExpiry = 5;
+        final int UICashOrNothingNoneAtExpiry = 6;
+        final int DIAssetOrNothingNoneAtExpiry = 7;
+        final int UIAssetOrNothingNoneAtExpiry = 8;
+        final int DOCashOrNothingNoneAtExpiry = 9;
+        final int UOCashOrNothingNoneAtExpiry = 10;
+        final int DOAssetOrNothingNoneAtExpiry = 11;
+        final int UOAssetOrNothingNoneAtExpiry = 12;
+        final int DICashOrNothingCallAtExpiry = 13;
+        final int UICashOrNothingCallAtExpiry = 14;
+        final int DIAssetOrNothingCallAtExpiry = 15;
+        final int UIAssetOrNothingCallAtExpiry = 16;
+        final int DICashOrNothingPutAtExpiry = 17;
+        final int UICashOrNothingPutAtExpiry = 18;
+        final int DIAssetOrNothingPutAtExpiry = 19;
+        final int UIAssetOrNothingPutAtExpiry = 20;
+        final int DOCashOrNothingCallAtExpiry = 21;
+        final int UOCashOrNothingCallAtExpiry = 22;
+        final int DOAssetOrNothingCallAtExpiry = 23;
+        final int UOAssetOrNothingCallAtExpiry = 24;
+        final int DOCashOrNothingPutAtExpiry = 25;
+        final int UOCashOrNothingPutAtExpiry =26;
+        final int DOAssetOrNothingPutAtExpiry = 27;
+        final int UOAssetOrNothingPutAtExpiry = 28;
     }
 
     public interface OPTION_TYPE
@@ -52,6 +89,7 @@ public interface OptionsCalculatorInterface {
         final String X2 = "X2";
         final String U = "U";
         final String L = "L";
+        final String H = "H";
         final String T = "T";
         final String SIGMA = "sigma";
         final String R = "r";
@@ -65,6 +103,7 @@ public interface OptionsCalculatorInterface {
         final String OPTION_FLAG = "optionflag";
         final String LOWER_BARRIER_FLAG = "lowerbarrierflag";
         final String UPPER_BARRIER_FLAG = "upperbarrierflag";
+        final String SINGLE_BINARY_BARRIER_TYPE = "sbb";
     }
     
     public interface GUI_INPUT
@@ -78,6 +117,8 @@ public interface OptionsCalculatorInterface {
         final String STRIKE_PRICE = CALCULATOR_INPUT.X;
         final String LOWER_STRIKE_PRICE = CALCULATOR_INPUT.X1;
         final String UPPER_STRIKE_PRICE = CALCULATOR_INPUT.X2;
+        final String BARRIER = CALCULATOR_INPUT.H;
+        final String SINGLE_BINARY_BARRIER_TYPE = CALCULATOR_INPUT.SINGLE_BINARY_BARRIER_TYPE;
         final String LOWER_BARRIER = CALCULATOR_INPUT.L;
         final String UPPER_BARRIER = CALCULATOR_INPUT.U;
         final String LOWER_BARRIER_FLAG = CALCULATOR_INPUT.LOWER_BARRIER_FLAG;
